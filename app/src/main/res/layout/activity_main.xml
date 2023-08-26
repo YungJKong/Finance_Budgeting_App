@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,22 +11,22 @@
         android:id="@+id/userContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:background="@drawable/bar"
         android:elevation="10dp"
+        android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/userIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/user"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/user" />
 
         <TextView
             android:id="@+id/usernameTextView"
@@ -34,97 +35,266 @@
             android:layout_toEndOf="@+id/userIcon"
             android:text="Hi, John"
             android:textSize="22sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/welcomeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/usernameTextView"
             android:layout_toEndOf="@+id/userIcon"
             android:text="Welcome back!"
-            android:layout_below="@+id/usernameTextView"
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/balanceContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:layout_constraintTop_toBottomOf="@+id/userContainer"
-        android:background="@drawable/box"
-        android:elevation="20dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
+    <ScrollView
+        android:id="@+id/scrollableContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userContainer">
 
-        <ImageView
-            android:id="@+id/balanceIcon"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:src="@drawable/credit"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
-
-        <TextView
-            android:id="@+id/balanceTextView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/balanceIcon"
-            android:text="Your Balance:"
-            android:textSize="16sp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="40dp"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/moneyTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/balanceIcon"
-            android:layout_below="@+id/balanceTextView"
-            android:text="RM 5000.00"
-            android:textSize="28sp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="40dp"
-            android:textStyle="bold"/>
+            <RelativeLayout
+                android:id="@+id/balanceContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/box"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userContainer"
+                app:layout_constraintVertical_bias="0.5">
 
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/balanceIcon"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/credit" />
 
-    <RelativeLayout
-        android:id="@+id/activityContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toBottomOf="@+id/balanceContainer"
-        android:background="@drawable/box"
-        android:elevation="20dp"
-        android:layout_marginTop="30dp">
+                <TextView
+                    android:id="@+id/balanceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_toEndOf="@+id/balanceIcon"
+                    android:text="Your Balance:"
+                    android:textSize="16sp" />
 
-        <TextView
-        android:id="@+id/recentActivitiesLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recent Activities"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"/>
+                <TextView
+                    android:id="@+id/moneyTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/balanceTextView"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_toEndOf="@+id/balanceIcon"
+                    android:text="RM 5000.00"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
-        <ListView
-        android:id="@+id/recentActivitiesListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recentActivitiesLabel"
-        android:layout_marginTop="8dp"/>
+            </RelativeLayout>
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/incomeExpenseContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/balanceContainer"
+                app:layout_constraintVertical_bias="0.5">
 
+                <!-- Income Box -->
+                <RelativeLayout
+                    android:id="@+id/incomeBox"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/box1"
+                    android:elevation="10dp">
+
+                    <ImageView
+                        android:id="@+id/incomeIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/increase" />
+
+                    <TextView
+                        android:id="@+id/incomeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/incomeIcon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
+                        android:text="Income"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- Add more elements as needed -->
+
+                </RelativeLayout>
+
+                <!-- Expense Box -->
+                <RelativeLayout
+                    android:id="@+id/expenseBox"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/incomeBox"
+                    android:layout_weight="1"
+                    android:background="@drawable/box2"
+                    android:elevation="10dp">
+
+                    <ImageView
+                        android:id="@+id/expenseIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/decrease" />
+
+                    <TextView
+                        android:id="@+id/expenseTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/expenseIcon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
+                        android:text="Expense"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- Add more elements as needed -->
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/budgetText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Budget"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/incomeExpenseContainer" />
+
+            <RelativeLayout
+                android:id="@+id/budgetContainer"
+                android:layout_width="380dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box"
+                android:clickable="true"
+                android:elevation="20dp"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/budgetText"
+                app:layout_constraintVertical_bias="0.5">
+
+
+                <ImageView
+                    android:id="@+id/budget"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/budget" />
+
+                <TextView
+                    android:id="@+id/budgetTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_toEndOf="@+id/budget"
+                    android:text="Create and View your own budget"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/clickTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/budgetTv"
+                    android:layout_toEndOf="@+id/budget"
+                    android:text="Click Here"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/btnRight"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/budgetTv"
+                    android:src="@drawable/right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/activityContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/box"
+                android:elevation="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/budgetContainer">
+
+                <TextView
+                    android:id="@+id/recentActivitiesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Recent Activities"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/recentActivitiesListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/recentActivitiesLabel"
+                    android:layout_marginTop="8dp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <include
         android:id="@+id/bottomNavigation"
@@ -132,9 +302,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-
-    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
