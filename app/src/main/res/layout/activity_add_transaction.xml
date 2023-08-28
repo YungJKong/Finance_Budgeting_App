@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTransaction">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_addTrans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Transaction"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnIncomes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:text="Incomes"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnExpenses"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:text="Expenses"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnSavings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:text="Savings"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:id="@+id/currencyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="RM"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/amountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_toEndOf="@id/currencyTextView"
+                android:background="@null"
+                android:hint="0.00"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/amountEditText"
+                android:background="@color/black" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnBank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:text="Bank"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnCredit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:text="Credit Card"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnEwallet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="8dp"
+                android:padding="12dp"
+                android:text="E-wallet"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/categoryButton"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:text="Category" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/noteButton"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:text="Note" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/dateButton"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:text="Date" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

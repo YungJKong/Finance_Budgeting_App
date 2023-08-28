@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Handle the Activities button click here
                 // For example: startActivity(new Intent(MainActivity.this, ActivitiesActivity.class));
+                startActivity(new Intent(MainActivity.this, com.example.financebudgetingapp.Transaction.class));
             }
         });
 
@@ -73,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> recentActivities = fetchRecentActivities(); // Implement this
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentActivities);
         recentActivitiesListView.setAdapter(adapter);
+
+
+
+
     }
 
     public class Transaction {
