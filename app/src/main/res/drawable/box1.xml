@@ -9,5 +9,5 @@
         /> <!-- Rounded corner radius -->
     <size
         android:width="130dp"
-        android:height="150dp" /> <!-- Custom height -->
+        android:height="120dp" /> <!-- Custom height -->
 </shape>
