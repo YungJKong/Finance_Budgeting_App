@@ -6,23 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".AddTransaction">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_addTrans"
+        <RelativeLayout
+            android:id="@+id/transaction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Transaction"
-            android:textSize="24sp" />
+            android:background="@drawable/bar"
+            android:elevation="10dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="Back Button"
+                android:clickable="true"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/tv_addTrans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/btnBack"
+                android:text="Add Transaction"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/transaction">
 
             <Button
                 android:id="@+id/btnIncomes"
@@ -57,72 +83,90 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/currencyTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="RM"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+            <RelativeLayout
+                android:layout_width="350dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/box4"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
-            <EditText
-                android:id="@+id/amountEditText"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_toEndOf="@id/currencyTextView"
-                android:background="@null"
-                android:hint="0.00"
-                android:inputType="numberDecimal"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/currencyTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="RM"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/amountEditText"
-                android:background="@color/black" />
+                <EditText
+                    android:id="@+id/amountEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/currencyTextView"
+                    android:background="@null"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnBank"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:drawablePadding="8dp"
-                android:padding="12dp"
+                android:background="@drawable/rounded_button"
+                android:drawableTop="@drawable/bank"
+                android:drawablePadding="5dp"
+                android:padding="8dp"
                 android:text="Bank"
                 android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnCredit"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:drawablePadding="8dp"
-                android:padding="12dp"
+                android:background="@drawable/rounded_button"
+                android:drawableTop="@drawable/credit_card"
+                android:drawablePadding="5dp"
+                android:padding="8dp"
                 android:text="Credit Card"
                 android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnEwallet"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_weight="1"
-                android:drawablePadding="8dp"
-                android:padding="12dp"
+                android:background="@drawable/rounded_button"
+                android:drawableTop="@drawable/wallet"
+                android:drawablePadding="5dp"
+                android:padding="8dp"
                 android:text="E-wallet"
                 android:textSize="16sp" />
 
@@ -148,6 +192,7 @@
                 android:text="Category" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -189,7 +234,6 @@
                 android:text="Date" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

@@ -3,6 +3,10 @@ package com.example.financebudgetingapp;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +15,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 
@@ -24,6 +30,7 @@ public class AddTransaction extends AppCompatActivity {
     private Button btnBank, btnCredit, btnEwallet;
     private Button dateButton;
     private Calendar calendar;
+    private ImageView btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +39,37 @@ public class AddTransaction extends AppCompatActivity {
         btnIncomes = findViewById(R.id.btnIncomes);
         btnExpenses = findViewById(R.id.btnExpenses);
         btnSavings = findViewById(R.id.btnSavings);
+        btnBank = findViewById(R.id.btnBank);
+        btnCredit = findViewById(R.id.btnCredit);
+        btnEwallet = findViewById(R.id.btnEwallet);
+        btnBack = findViewById(R.id.btnBack);
+
+        // Load the original drawable
+        Drawable originalDrawable = getResources().getDrawable(R.drawable.bank);
+        Drawable originalDrawable1 = getResources().getDrawable(R.drawable.credit_card);
+        Drawable originalDrawable2 = getResources().getDrawable(R.drawable.wallet);
+
+    // Calculate the desired width and height for the resized drawable
+        int desiredWidth = 30;  // Set your desired width in pixels
+        int desiredHeight = 30; // Set your desired height in pixels
+
+    // Resize the drawable
+        Drawable resizedDrawable = resizeDrawable(originalDrawable, desiredWidth, desiredHeight);
+        Drawable resizedDrawable1 = resizeDrawable(originalDrawable1, desiredWidth, desiredHeight);
+        Drawable resizedDrawable2 = resizeDrawable(originalDrawable2, desiredWidth, desiredHeight);
+
+    // Set the resized drawable as the top drawable for the Button
+        btnBank.setCompoundDrawablesWithIntrinsicBounds(null, resizedDrawable, null, null);
+        btnCredit.setCompoundDrawablesWithIntrinsicBounds(null, resizedDrawable1, null, null);
+        btnEwallet.setCompoundDrawablesWithIntrinsicBounds(null, resizedDrawable2, null, null);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Home button click here
+                startActivity(new Intent(AddTransaction.this, Transaction.class));
+            }
+        });
 
         btnIncomes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +149,14 @@ public class AddTransaction extends AppCompatActivity {
 
 
     }
+
+    private Drawable resizeDrawable(Drawable drawable, int width, int height) {
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+        return new BitmapDrawable(getResources(), resizedBitmap);
+    }
+
+
     private void setActiveButton(Button activeButton) {
         btnIncomes.setEnabled(activeButton != btnIncomes);
         btnExpenses.setEnabled(activeButton != btnExpenses);
