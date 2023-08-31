@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinanceBudgetingApp" >
+
+        <activity
+            android:name=".CreditCard"
+            android:exported="false" />
         <activity
             android:name=".AddTransaction"
             android:exported="false" />

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView moneyTextView;
     private ListView recentActivitiesListView;
     private ImageButton btnHome, btnAct, btnStat;
-
+    private RelativeLayout balanceContainer;
+    private ImageView balanceIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         btnStat = findViewById(R.id.btnStat);
         incomeTV = findViewById(R.id.incomeTV);
         expenseTV = findViewById(R.id.expenseTV);
+        balanceContainer = findViewById(R.id.balanceContainer);
+        balanceIcon =findViewById(R.id.balanceIcon);
 
         // Initialize SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -62,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
         float savedExpenseAmount = sharedPreferences1.getFloat("expenseAmount", 0);
         incomeTV.setText(String.format(Locale.getDefault(), "%.2f", savedIncomeAmount));
         expenseTV.setText(String.format(Locale.getDefault(), "%.2f", savedExpenseAmount));
+
+        balanceContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event here
+                // You can navigate to a new page using Intent
+                startActivity(new Intent(MainActivity.this, CreditCard.class));
+            }
+        });
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override

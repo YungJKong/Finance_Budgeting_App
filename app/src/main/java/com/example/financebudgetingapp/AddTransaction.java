@@ -25,10 +25,9 @@ import java.util.Calendar;
 public class AddTransaction extends AppCompatActivity {
     private Button addButton;
     private String enteredText = "Note";
-    private Button categoryButton;
+    private Button categoryButton, noteButton, dateButton;
     private Button btnIncomes, btnExpenses, btnSavings;
     private Button btnBank, btnCredit, btnEwallet;
-    private Button dateButton;
     private Calendar calendar;
     private ImageView btnBack;
     @Override
@@ -43,25 +42,39 @@ public class AddTransaction extends AppCompatActivity {
         btnCredit = findViewById(R.id.btnCredit);
         btnEwallet = findViewById(R.id.btnEwallet);
         btnBack = findViewById(R.id.btnBack);
+        categoryButton = findViewById(R.id.categoryButton);
+        noteButton = findViewById(R.id.noteButton);
+        dateButton = findViewById(R.id.dateButton);
 
         // Load the original drawable
         Drawable originalDrawable = getResources().getDrawable(R.drawable.bank);
         Drawable originalDrawable1 = getResources().getDrawable(R.drawable.credit_card);
         Drawable originalDrawable2 = getResources().getDrawable(R.drawable.wallet);
+        Drawable originalDrawable3 = getResources().getDrawable(R.drawable.calendar);
+        Drawable originalDrawable4 = getResources().getDrawable(R.drawable.categories);
+        Drawable originalDrawable5 = getResources().getDrawable(R.drawable.note);
 
     // Calculate the desired width and height for the resized drawable
         int desiredWidth = 30;  // Set your desired width in pixels
         int desiredHeight = 30; // Set your desired height in pixels
+        int desiredWidth1 = 40;
+        int desiredHeight1 = 40;
 
     // Resize the drawable
         Drawable resizedDrawable = resizeDrawable(originalDrawable, desiredWidth, desiredHeight);
         Drawable resizedDrawable1 = resizeDrawable(originalDrawable1, desiredWidth, desiredHeight);
         Drawable resizedDrawable2 = resizeDrawable(originalDrawable2, desiredWidth, desiredHeight);
+        Drawable resizedDrawable3 = resizeDrawable(originalDrawable3, desiredWidth1, desiredHeight1);
+        Drawable resizedDrawable4 = resizeDrawable(originalDrawable4, desiredWidth1, desiredHeight1);
+        Drawable resizedDrawable5 = resizeDrawable(originalDrawable5, desiredWidth1, desiredHeight1);
 
     // Set the resized drawable as the top drawable for the Button
         btnBank.setCompoundDrawablesWithIntrinsicBounds(null, resizedDrawable, null, null);
         btnCredit.setCompoundDrawablesWithIntrinsicBounds(null, resizedDrawable1, null, null);
         btnEwallet.setCompoundDrawablesWithIntrinsicBounds(null, resizedDrawable2, null, null);
+        categoryButton.setCompoundDrawablesWithIntrinsicBounds(resizedDrawable4, null, null, null);
+        dateButton.setCompoundDrawablesWithIntrinsicBounds(resizedDrawable3, null, null, null);
+        noteButton.setCompoundDrawablesWithIntrinsicBounds(resizedDrawable5, null, null, null);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +210,7 @@ public class AddTransaction extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         enteredText = inputEditText.getText().toString();
-                        addButton.setText(enteredText);
+                        addButton.setText("Note: " + enteredText);
                     }
                 })
                 .setNegativeButton("Cancel", null);

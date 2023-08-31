@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CreditCard">
+
+    <RelativeLayout
+        android:id="@+id/credit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bar"
+        android:elevation="10dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="Back Button"
+        android:clickable="true"
+        android:src="@drawable/back" />
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Credit Card Details"
+        android:layout_toEndOf="@id/btnBack"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/firstCardContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box4"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/credit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Card details for the first card -->
+        <ImageView
+            android:id="@+id/cardImageView1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+                android:src="@drawable/creditcard1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"/>
+        <TextView
+            android:id="@+id/cardName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Card Name: Hong Leong Bank"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/cardImageView1"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="30dp"/>
+        <TextView
+            android:id="@+id/balance1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Balance: RM19283.00"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/cardImageView1"
+            android:layout_below="@id/cardName1"
+            android:layout_alignStart="@id/cardName1"
+            android:layout_marginTop="5dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/secondCardContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box4"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/firstCardContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Card details for the second card -->
+        <ImageView
+            android:id="@+id/cardImageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/creditcard2"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"/>
+        <TextView
+            android:id="@+id/cardName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Card Name: Public Bank"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/cardImageView2"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="30dp"/>
+        <TextView
+            android:id="@+id/balance2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Balance: RM6283.00"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/cardImageView2"
+            android:layout_below="@id/cardName2"
+            android:layout_alignStart="@id/cardName2"
+            android:layout_marginTop="5dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/thirdCardContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box4"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/secondCardContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Card details for the third card -->
+        <ImageView
+            android:id="@+id/cardImageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/creditcard3"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"/>
+        <TextView
+            android:id="@+id/cardName3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Card Name: Hong Leong Bank"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/cardImageView3"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="30dp"/>
+        <TextView
+            android:id="@+id/balance3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Balance: RM69696.69"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/cardImageView3"
+            android:layout_below="@id/cardName3"
+            android:layout_alignStart="@id/cardName3"
+            android:layout_marginTop="5dp" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

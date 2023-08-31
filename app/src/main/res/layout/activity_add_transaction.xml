@@ -189,7 +189,13 @@
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:text="Category" />
+                android:text="Category"
+                android:background="@drawable/box3"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/categories"
+                android:drawablePadding="8dp"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -210,7 +216,13 @@
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:text="Note" />
+                android:text="Note"
+                android:background="@drawable/box3"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/note"
+                android:drawablePadding="8dp"
+                android:gravity="center"/>
 
         </LinearLayout>
 
@@ -231,7 +243,13 @@
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:text="Date" />
+                android:text="Date"
+                android:background="@drawable/box3"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/calendar"
+                android:drawablePadding="8dp"
+                android:gravity="center"/>
 
         </LinearLayout>
 
