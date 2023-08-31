@@ -30,6 +30,14 @@ public class AddTransaction extends AppCompatActivity {
     private Button btnBank, btnCredit, btnEwallet;
     private Calendar calendar;
     private ImageView btnBack;
+    private SQLiteAdapter mySQLiteAdapter;
+    private String type="";
+    private Float money;
+    private String wallet="";
+    private String category="";
+    private String note="";
+    private String date="";
+    private EditText amountEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +53,9 @@ public class AddTransaction extends AppCompatActivity {
         categoryButton = findViewById(R.id.categoryButton);
         noteButton = findViewById(R.id.noteButton);
         dateButton = findViewById(R.id.dateButton);
+        addButton= findViewById(R.id.btnAdd);
+        mySQLiteAdapter = new SQLiteAdapter(this);
+        amountEditText = findViewById(R.id.amountEditText);
 
         // Load the original drawable
         Drawable originalDrawable = getResources().getDrawable(R.drawable.bank);
@@ -84,10 +95,12 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
+        setActiveButton(btnIncomes);
         btnIncomes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setActiveButton(btnIncomes);
+
             }
         });
 
@@ -95,6 +108,7 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setActiveButton(btnExpenses);
+
             }
         });
 
@@ -102,17 +116,21 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setActiveButton(btnSavings);
+
             }
         });
+
+
 
         btnBank = findViewById(R.id.btnBank);
         btnCredit = findViewById(R.id.btnCredit);
         btnEwallet = findViewById(R.id.btnEwallet);
-
+        setActiveButton2(btnBank);
         btnBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setActiveButton2(btnBank);
+
             }
         });
 
@@ -120,6 +138,7 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setActiveButton2(btnCredit);
+
             }
         });
 
@@ -127,6 +146,7 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setActiveButton2(btnEwallet);
+
             }
         });
 
@@ -137,12 +157,13 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v);
+
             }
         });
         //Button for NOTE
-        addButton = findViewById(R.id.noteButton);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+
+        noteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showInputDialog();
@@ -157,6 +178,18 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String sMoney = amountEditText.getText().toString();
+                money = Float.parseFloat(sMoney);
+                //SQL Adapter Open To Write
+                mySQLiteAdapter.openToWrite();
+                mySQLiteAdapter.insert(type,money,wallet,category,note,date);
+                mySQLiteAdapter.close();
+
             }
         });
 
@@ -174,12 +207,39 @@ public class AddTransaction extends AppCompatActivity {
         btnIncomes.setEnabled(activeButton != btnIncomes);
         btnExpenses.setEnabled(activeButton != btnExpenses);
         btnSavings.setEnabled(activeButton != btnSavings);
+
+        if(activeButton == btnIncomes){
+            type = "Incomes";
+        }
+        else if (activeButton == btnExpenses){
+            type = "Expenses";
+        }
+        else if (activeButton == btnSavings){
+            type = "Savings";
+        }
+        else{
+            type = "";
+        }
     }
 
     private void setActiveButton2(Button activeButton) {
         btnBank.setEnabled(activeButton != btnBank);
         btnCredit.setEnabled(activeButton != btnCredit);
         btnEwallet.setEnabled(activeButton != btnEwallet);
+
+
+        if(activeButton == btnBank){
+            wallet = "Bank";
+        }
+        else if (activeButton == btnCredit){
+            wallet = "Credit Card";
+        }
+        else if (activeButton == btnEwallet){
+            type = "E-Wallet";
+        }
+        else{
+            type = "";
+        }
     }
 
     private void showPopupMenu(View anchorView) {
@@ -190,6 +250,7 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 String selectedCategory = item.getTitle().toString();
+                category = selectedCategory;
                 categoryButton.setText(selectedCategory);
                 return true;
             }
@@ -210,7 +271,8 @@ public class AddTransaction extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         enteredText = inputEditText.getText().toString();
-                        addButton.setText("Note: " + enteredText);
+                        note = enteredText;
+                        noteButton.setText("Note: " + enteredText);
                     }
                 })
                 .setNegativeButton("Cancel", null);
@@ -228,6 +290,7 @@ public class AddTransaction extends AppCompatActivity {
                 this,
                 (view, year1, monthOfYear, dayOfMonth) -> {
                     String selectedDate = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year1;
+                    date = selectedDate;
                     dateButton.setText(selectedDate);
                 },
                 year, month, day
