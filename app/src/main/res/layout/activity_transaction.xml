@@ -32,25 +32,18 @@
         android:id="@+id/tranContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
-        app:layout_constraintTop_toBottomOf="@id/activity">
+        app:layout_constraintTop_toBottomOf="@+id/activity"
+        tools:layout_editor_absoluteX="7dp">
 
         <LinearLayout
+            android:id="@+id/dataLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:background="@drawable/box6">
-
-            <TextView
-                android:id="@+id/viewTransaction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:layout_margin="10dp"/>
-
+            android:fillViewport="true"
+            android:orientation="vertical">
+            <!-- Rows for displaying data will be added here dynamically -->
 
         </LinearLayout>
     </ScrollView>
@@ -62,7 +55,6 @@
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintTop_toBottomOf="@+id/tranContent"
         android:background="@drawable/box6">
 
         <Button

@@ -7,6 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLiteAdapter extends AppCompatActivity {
     public static final String MYDATABASE_NAME = "MY_DATABASE";
@@ -66,12 +73,10 @@ public class SQLiteAdapter extends AppCompatActivity {
     public int deleteAll() {
         return sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);}
 
-    public String queueAll() {
+    public void populateDataLayout(LinearLayout dataLayout) {
         String[] columns = new String[] {
-                COLUMN_TYPE,
-                COLUMN_MONEY,
-                COLUMN_WALLET,
                 COLUMN_CATEGORY,
+                COLUMN_MONEY,
                 COLUMN_NOTE,
                 COLUMN_DATE
         };
@@ -86,37 +91,63 @@ public class SQLiteAdapter extends AppCompatActivity {
                 null
         );
 
-        StringBuilder resultBuilder = new StringBuilder();
-
-        int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
-        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
-        int index_WALLET = cursor.getColumnIndex(COLUMN_WALLET);
         int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
         int index_NOTE = cursor.getColumnIndex(COLUMN_NOTE);
         int index_DATE = cursor.getColumnIndex(COLUMN_DATE);
 
         cursor.moveToFirst();
+
         while (!cursor.isAfterLast()) {
-            String type = cursor.getString(index_TYPE);
-            double money = cursor.getDouble(index_MONEY);
-            String wallet = cursor.getString(index_WALLET);
             String category = cursor.getString(index_CATEGORY);
+            double money = cursor.getDouble(index_MONEY);
             String note = cursor.getString(index_NOTE);
             String date = cursor.getString(index_DATE);
 
-            // Process the retrieved data as needed
-            resultBuilder.append("Type: ").append(type).append("\n");
-            resultBuilder.append("Amount: ").append(money).append("\n");
-            resultBuilder.append("Wallet: ").append(wallet).append("\n");
-            resultBuilder.append("Category: ").append(category).append("\n");
-            resultBuilder.append("Note: ").append(note).append("\n");
-            resultBuilder.append("Date: ").append(date).append("\n\n");
 
+            LinearLayout ll = new LinearLayout(context);
+            ll.setOrientation(LinearLayout.HORIZONTAL);
+
+
+            LinearLayout ll_left = new LinearLayout(context);
+            ll_left.setOrientation(LinearLayout.VERTICAL);
+            ll_left.setLayoutParams(new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+
+
+            LinearLayout ll_right = new LinearLayout(context);
+            ll_right.setOrientation(LinearLayout.VERTICAL);
+            ll_right.setLayoutParams(new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+
+
+            TextView tv_category = new TextView(context);
+            TextView tv_money = new TextView(context);
+            TextView tv_note = new TextView(context);
+            TextView tv_date = new TextView(context);
+
+            tv_category.setTextSize(18);
+            tv_money.setTextSize(18);
+            tv_note.setTextSize(18);
+            tv_date.setTextSize(18);
+            tv_category.setText(category);
+            tv_money.setText(String.format("%.2f", money));
+            tv_money.setGravity(Gravity.END);
+            tv_note.setText(note);
+            tv_date.setText(date);
+            tv_date.setGravity(Gravity.END);
+
+            ll_left.addView(tv_category);
+            ll_left.addView(tv_note);
+            ll_right.addView(tv_money);
+            ll_right.addView(tv_date);
+            ll.addView(ll_left);
+            ll.addView(ll_right);
+            dataLayout.addView(ll);
             cursor.moveToNext();
         }
 
         cursor.close();
-        return resultBuilder.toString();
     }
     public double incomeAll() {
         String[] columns = new String[] {

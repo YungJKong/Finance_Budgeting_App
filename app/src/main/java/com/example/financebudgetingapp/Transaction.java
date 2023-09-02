@@ -4,14 +4,20 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class Transaction extends AppCompatActivity {
 
     private ImageButton btnHome, btnAct, btnStat;
-
+    private LinearLayout dataLayout;
     private Button add;
     private TextView viewTransaction;
     private SQLiteAdapter mySQLiteAdapter;
@@ -21,7 +27,7 @@ public class Transaction extends AppCompatActivity {
         setContentView(R.layout.activity_transaction);
 
         add = findViewById(R.id.addTran);
-        viewTransaction = findViewById(R.id.viewTransaction);
+        //viewTransaction = findViewById(R.id.viewTransaction);
         btnHome = findViewById(R.id.btnHome);
         btnAct = findViewById(R.id.btnAct);
         btnStat = findViewById(R.id.btnStat);
@@ -36,13 +42,6 @@ public class Transaction extends AppCompatActivity {
             }
         });
 
-        mySQLiteAdapter = new SQLiteAdapter(this);
-        mySQLiteAdapter.openToRead();
-        String contentRead =
-                mySQLiteAdapter.queueAll();
-        mySQLiteAdapter.close();
-
-        viewTransaction.setText(contentRead);
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +68,14 @@ public class Transaction extends AppCompatActivity {
             }
         });
 
+        dataLayout = findViewById(R.id.dataLayout); // Get the dataLayout
+        mySQLiteAdapter = new SQLiteAdapter(this);
+        mySQLiteAdapter.openToRead();
+
+        // Populate the dataLayout with data from the database
+        mySQLiteAdapter.populateDataLayout(dataLayout);
 
 
     }
+
 }
