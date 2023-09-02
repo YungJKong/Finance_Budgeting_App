@@ -61,10 +61,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-
+        mySQLiteAdapter = new SQLiteAdapter(this);
+        mySQLiteAdapter.openToRead();
+        double incomes = mySQLiteAdapter.incomeAll();
+        double expenses = mySQLiteAdapter.expensesAll();
+        mySQLiteAdapter.close();
         // Retrieve stored amounts (default to 0 if not available)
-        float savedIncomeAmount = sharedPreferences1.getFloat("incomeAmount", 0);
-        float savedExpenseAmount = sharedPreferences1.getFloat("expenseAmount", 0);
+        double savedIncomeAmount = incomes;
+        double savedExpenseAmount = expenses;
         incomeTV.setText(String.format(Locale.getDefault(), "%.2f", savedIncomeAmount));
         expenseTV.setText(String.format(Locale.getDefault(), "%.2f", savedExpenseAmount));
 

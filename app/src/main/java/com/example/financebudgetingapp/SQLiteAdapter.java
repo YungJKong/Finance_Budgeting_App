@@ -7,11 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class SQLiteAdapter extends AppCompatActivity {
     public static final String MYDATABASE_NAME = "MY_DATABASE";
@@ -122,6 +117,62 @@ public class SQLiteAdapter extends AppCompatActivity {
 
         cursor.close();
         return resultBuilder.toString();
+    }
+    public double incomeAll() {
+        String[] columns = new String[] {
+                COLUMN_MONEY,
+                COLUMN_TYPE,
+        };
+        String selection = COLUMN_TYPE + " = ?";
+        String[] selectionArgs = new String[] { "Incomes" };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
+        double money = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            money += cursor.getDouble(index_MONEY);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return money;
+    }
+    public double expensesAll() {
+        String[] columns = new String[] {
+                COLUMN_MONEY,
+                COLUMN_TYPE,
+        };
+        String selection = COLUMN_TYPE + " = ?";
+        String[] selectionArgs = new String[] { "Expenses" };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
+        double money = 0;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            money += cursor.getDouble(index_MONEY);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return money;
     }
 
     public class SQLiteHelper extends SQLiteOpenHelper {
