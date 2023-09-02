@@ -9,7 +9,9 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class SQLiteAdapter extends AppCompatActivity {
     public static final String MYDATABASE_NAME = "MY_DATABASE";
@@ -109,7 +111,7 @@ public class SQLiteAdapter extends AppCompatActivity {
 
             // Process the retrieved data as needed
             resultBuilder.append("Type: ").append(type).append("\n");
-            resultBuilder.append("Money: ").append(money).append("\n");
+            resultBuilder.append("Amount: ").append(money).append("\n");
             resultBuilder.append("Wallet: ").append(wallet).append("\n");
             resultBuilder.append("Category: ").append(category).append("\n");
             resultBuilder.append("Note: ").append(note).append("\n");
@@ -135,9 +137,6 @@ public class SQLiteAdapter extends AppCompatActivity {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
     }
-
-
-
 
 
 }

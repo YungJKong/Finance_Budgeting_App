@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnHome, btnAct, btnStat;
     private RelativeLayout balanceContainer;
     private ImageView balanceIcon;
+    private SQLiteAdapter mySQLiteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         float savedExpenseAmount = sharedPreferences1.getFloat("expenseAmount", 0);
         incomeTV.setText(String.format(Locale.getDefault(), "%.2f", savedIncomeAmount));
         expenseTV.setText(String.format(Locale.getDefault(), "%.2f", savedExpenseAmount));
+
+
 
         balanceContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,4 +298,5 @@ public class MainActivity extends AppCompatActivity {
                 " (" + (activity.getAmount() >= 0 ? "+" : "-") + "RM" + Math.abs(activity.getAmount()) + ")";
         return formattedDescription;
     }
+    
 }

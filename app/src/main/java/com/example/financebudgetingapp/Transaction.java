@@ -22,6 +22,9 @@ public class Transaction extends AppCompatActivity {
 
         add = findViewById(R.id.addTran);
         viewTransaction = findViewById(R.id.viewTransaction);
+        btnHome = findViewById(R.id.btnHome);
+        btnAct = findViewById(R.id.btnAct);
+        btnStat = findViewById(R.id.btnStat);
 
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +44,30 @@ public class Transaction extends AppCompatActivity {
 
         viewTransaction.setText(contentRead);
 
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Home button click here
+                startActivity(new Intent(Transaction.this, MainActivity.class));
+            }
+        });
 
+        btnAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Activities button click here
+                // For example: startActivity(new Intent(MainActivity.this, ActivitiesActivity.class));
+                startActivity(new Intent(Transaction.this, com.example.financebudgetingapp.Transaction.class));
+            }
+        });
+
+        btnStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Statistics button click here
+                // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
+            }
+        });
 
 
 

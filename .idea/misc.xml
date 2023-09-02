@@ -18,6 +18,9 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box2.xml" value="0.2324074074074074" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box3.xml" value="0.1787037037037037" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box4.xml" value="0.18055555555555555" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box5.xml" value="0.20925925925925926" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box6.xml" value="0.2074074074074074" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box7.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/button_normal.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/button_pressed.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/button_selected.xml" value="0.18796296296296297" />
@@ -29,6 +32,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_credit_card.xml" value="0.19635416666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_splash.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_sqlite_adapter.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_transaction.xml" value="0.19635416666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/add_card.xml" value="0.2296195652173913" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/bottom_navigation.xml" value="0.1671875" />

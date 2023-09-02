@@ -79,7 +79,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/box"
                 android:elevation="20dp"
                 android:clickable="true"
@@ -252,7 +252,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/box"
                 android:clickable="true"
-                android:elevation="20dp"
+                android:elevation="10dp"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -304,30 +304,29 @@
 
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/recentActivitiesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Recent Activities"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:id="@+id/activityContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/box"
-                android:elevation="20dp"
+                android:elevation="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/budgetContainer">
-
-                <TextView
-                    android:id="@+id/recentActivitiesLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Recent Activities"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
 
                 <ListView
                     android:id="@+id/recentActivitiesListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/recentActivitiesLabel"
                     android:layout_marginTop="8dp" />
 
             </RelativeLayout>
