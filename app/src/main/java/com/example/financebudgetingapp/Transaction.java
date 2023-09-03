@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Transaction extends AppCompatActivity {
 
-    private ImageButton btnHome, btnAct, btnStat;
+    private LinearLayout btnHome, btnAct, btnStat;
     private LinearLayout dataLayout;
     private Button add;
     private TextView viewTransaction;
