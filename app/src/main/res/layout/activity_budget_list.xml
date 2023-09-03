@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/budget_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bar"
+            android:elevation="10dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btnbudgetlistBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:contentDescription="Back Button"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/tv_budgetlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/btnbudgetlistBack"
+                android:text="Budget List"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/BudgetButton"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/box5"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Create Budget" />
+
+        <ListView
+            android:id="@+id/budgetListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:padding="16dp" >
+
+        </ListView>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Finance budgeting app</string>
+    <string-array name="budget_durations">
+        <item>Monthly</item>
+        <item>Quarterly</item>
+        <item>Yearly</item>
+    </string-array>
 </resources>

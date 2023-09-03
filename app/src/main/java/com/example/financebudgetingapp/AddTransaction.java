@@ -235,10 +235,10 @@ public class AddTransaction extends AppCompatActivity {
             wallet = "Credit Card";
         }
         else if (activeButton == btnEwallet){
-            type = "E-Wallet";
+            wallet = "E-Wallet";
         }
         else{
-            type = "";
+            wallet = "";
         }
     }
 

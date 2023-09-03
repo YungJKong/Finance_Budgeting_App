@@ -11,6 +11,19 @@
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/input_dialog.xml" value="0.2171875" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/menu/bottom_menu.xml" value="0.2171875" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/menu/category_transaction.xml" value="0.2171875" />
+        <entry key="..\:/Users/PC/AppData/Local/Android/Sdk/platforms/android-34/data/res/layout/simple_list_item_1.xml" value="0.16510416666666666" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/activity_add_transaction.xml" value="0.14739583333333334" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/activity_budget_creation.xml" value="0.1265625" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/activity_budget_list.xml" value="0.2" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/activity_create_budget.xml" value="0.264" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/activity_main.xml" value="0.12447916666666667" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/activity_sqlite_adapter.xml" value="0.1265625" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/budget_list_item.xml" value="0.72" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/custom_list_item.xml" value="0.16510416666666666" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/dialog_expense.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/dialog_income.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/list_item_expense.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/PC/Desktop/UCCD3223/ass/Finance_Budgeting_App/app/src/main/res/layout/list_item_income_layout.xml" value="0.16510416666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/bar.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box.xml" value="0.26614583333333336" />

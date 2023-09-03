@@ -1,5 +1,6 @@
 package com.example.financebudgetingapp;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,10 +10,14 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.financebudgetingapp.model.Budget;
+import com.example.financebudgetingapp.model.TransactionModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,11 @@ public class SQLiteAdapter extends AppCompatActivity {
     public static final String COLUMN_NOTE = "note";
     public static final String COLUMN_DATE = "date";
 
+    public static final String BUDGET_TABLE_NAME = "DB_BUDGET";
+    public static final String COLUMN_BUDGET_CATEGORY = "category";
+    public static final String COLUMN_AMOUNT = "amount";
+    public static final String COLUMN_LEFT = "budgetleft";
+
     private static final String SCRIPT_CREATE_DATABASE ="CREATE TABLE " + MYDATABASE_TABLE + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_TYPE + " TEXT, " +
@@ -37,6 +47,12 @@ public class SQLiteAdapter extends AppCompatActivity {
             COLUMN_CATEGORY + " TEXT, " +
             COLUMN_NOTE + " TEXT, " +
             COLUMN_DATE + " TEXT)";
+
+    private static final String SCRIPT_CREATE_BUDGET_TABLE = "CREATE TABLE " + BUDGET_TABLE_NAME + " (" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_BUDGET_CATEGORY + " TEXT, " +
+            COLUMN_AMOUNT + " REAL, " +
+            COLUMN_LEFT + " REAL DEFAULT 0);";
 
     private SQLiteHelper sqLiteHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -101,21 +117,23 @@ public class SQLiteAdapter extends AppCompatActivity {
     public SQLiteAdapter(Context c){
         context = c;
     }
-    public SQLiteAdapter openToRead() throws
-            android.database.SQLException {
+
+    public SQLiteAdapter openToRead() throws android.database.SQLException {
         sqLiteHelper = new SQLiteHelper(context, MYDATABASE_NAME, null, MYDATABASE_VERSION);
         sqLiteDatabase = sqLiteHelper.getReadableDatabase();
         return this;
     }
-    public SQLiteAdapter openToWrite() throws
-            android.database.SQLException {
+
+    public SQLiteAdapter openToWrite() throws android.database.SQLException {
         sqLiteHelper = new SQLiteHelper(context, MYDATABASE_NAME, null,MYDATABASE_VERSION);
         sqLiteDatabase = sqLiteHelper.getWritableDatabase();
         return this;
     }
+
     public void close() {
         sqLiteHelper.close();
     }
+
     public long insert(String type, float money, String wallet, String category, String note, String date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_TYPE, type);
@@ -124,11 +142,19 @@ public class SQLiteAdapter extends AppCompatActivity {
         contentValues.put(COLUMN_CATEGORY, category);
         contentValues.put(COLUMN_NOTE, note);
         contentValues.put(COLUMN_DATE, date);
+
+        // update budget real time
+        if (type.equals("Expenses")) {
+            updateBudgetLeft(category, money);
+        }
+
         return sqLiteDatabase.insert(MYDATABASE_TABLE, null,
                 contentValues);
     }
+
     public int deleteAll() {
-        return sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);}
+        return sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);
+    }
 
     public void populateDataLayout(LinearLayout dataLayout) {
         String[] columns = new String[] {
@@ -163,6 +189,15 @@ public class SQLiteAdapter extends AppCompatActivity {
             String note = cursor.getString(index_NOTE);
             String date = cursor.getString(index_DATE);
 
+            // Create a separator line
+            View separator = new View(context);
+            separator.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1)); // Adjust the height as needed
+            separator.setBackgroundColor(Color.GRAY); // Set the separator color
+
+            // Add the separator to the dataLayout
+            dataLayout.addView(separator);
+
 
             LinearLayout ll = new LinearLayout(context);
             ll.setOrientation(LinearLayout.HORIZONTAL);
@@ -184,7 +219,7 @@ public class SQLiteAdapter extends AppCompatActivity {
             TextView tv_money = new TextView(context);
             TextView tv_note = new TextView(context);
             TextView tv_date = new TextView(context);
-
+            tv_money.setTypeface(null, Typeface.BOLD);
             tv_category.setTextSize(18);
             tv_money.setTextSize(18);
             tv_note.setTextSize(18);
@@ -203,6 +238,19 @@ public class SQLiteAdapter extends AppCompatActivity {
             tv_date.setText(date);
             tv_date.setGravity(Gravity.END);
 
+            // Create layout parameters for TextViews with margins
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, // Width
+                    LinearLayout.LayoutParams.WRAP_CONTENT  // Height
+            );
+            layoutParams.setMargins(0, 16, 0, 8); // Left, Top, Right, Bottom margins (adjust values as needed)
+
+// Apply layout parameters to TextViews
+            tv_category.setLayoutParams(layoutParams);
+            tv_money.setLayoutParams(layoutParams);
+            tv_note.setLayoutParams(layoutParams);
+            tv_date.setLayoutParams(layoutParams);
+
             ll_left.addView(tv_category);
             ll_left.addView(tv_note);
             ll_right.addView(tv_money);
@@ -215,6 +263,7 @@ public class SQLiteAdapter extends AppCompatActivity {
 
         cursor.close();
     }
+
     public void populateData(LinearLayout activityContainer) {
         String[] columns = new String[] {
                 COLUMN_TYPE,
@@ -231,7 +280,7 @@ public class SQLiteAdapter extends AppCompatActivity {
                 null,
                 null,
                 COLUMN_DATE + " DESC", // Order by date in descending order
-                "2"
+                "3"
         );
         int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
         int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
@@ -245,6 +294,14 @@ public class SQLiteAdapter extends AppCompatActivity {
             String category = cursor.getString(index_CATEGORY);
             double money = cursor.getDouble(index_MONEY);
             String date = cursor.getString(index_DATE);
+
+            View separator = new View(context);
+            separator.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1)); // Adjust the height as needed
+            separator.setBackgroundColor(Color.GRAY); // Set the separator color
+
+            // Add the separator to the dataLayout
+            activityContainer.addView(separator);
 
             LinearLayout ll = new LinearLayout(context);
             ll.setOrientation(LinearLayout.HORIZONTAL);
@@ -262,7 +319,7 @@ public class SQLiteAdapter extends AppCompatActivity {
             TextView tv_category = new TextView(context);
             TextView tv_money = new TextView(context);
             TextView tv_date = new TextView(context);
-
+            tv_money.setTypeface(null, Typeface.BOLD);
             tv_category.setTextSize(22);
             tv_category.setTypeface(null, Typeface.BOLD);
             tv_money.setTextSize(18);
@@ -322,6 +379,7 @@ public class SQLiteAdapter extends AppCompatActivity {
         cursor.close();
         return money;
     }
+
     public double expensesAll() {
         String[] columns = new String[] {
                 COLUMN_MONEY,
@@ -351,7 +409,160 @@ public class SQLiteAdapter extends AppCompatActivity {
         return money;
     }
 
+    public long insertBudget(String category, double amount, double left) {
 
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_BUDGET_CATEGORY, category);
+        contentValues.put(COLUMN_AMOUNT, amount);
+        contentValues.put(COLUMN_LEFT, left);
+
+        // Insert the budget
+        return sqLiteDatabase.insert(BUDGET_TABLE_NAME, null, contentValues);
+    }
+
+    public List<Budget> getBudgets() {
+        List<Budget> budgetList = new ArrayList<>();
+
+        // Ensure that the database is open for reading
+        openToRead();
+
+        String[] columns = new String[] {
+                COLUMN_BUDGET_CATEGORY,
+                COLUMN_AMOUNT,
+                COLUMN_LEFT
+        };
+
+        // Query the database to fetch budget data
+        Cursor cursor = sqLiteDatabase.query(
+                BUDGET_TABLE_NAME,  // Replace with your actual table name
+                columns,
+                null,  // You can add a WHERE clause here if needed
+                null,
+                null,
+                null,
+                null
+        );
+
+        int index_MONEY = cursor.getColumnIndex(COLUMN_AMOUNT);
+        int index_CATEGORY = cursor.getColumnIndex(COLUMN_BUDGET_CATEGORY);
+        int index_LEFT = cursor.getColumnIndex(COLUMN_LEFT);
+        double amount = 0;
+        String category = "";
+        double left = 0;
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            amount = cursor.getDouble(index_MONEY);
+            category = cursor.getString(index_CATEGORY);
+            left = cursor.getDouble(index_LEFT);
+
+            Budget budget = new Budget(category, amount, left);
+
+            // Add the Budget object to the list
+            budgetList.add(budget);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        // Close the database connection
+        close();
+
+        return budgetList;
+    }
+
+    public List<TransactionModel> getTransactionsByCategory(String category) {
+
+        openToRead();
+
+        String[] columns = new String[] {
+                COLUMN_MONEY,
+                COLUMN_TYPE,
+                COLUMN_CATEGORY
+        };
+
+        String selection = COLUMN_CATEGORY + " = ? AND " + COLUMN_TYPE + " = ?";
+        String[] selectionArgs = new String[] { category, "Expenses" };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        List<TransactionModel> transactionList = new ArrayList<>();
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
+        int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
+        double money = 0;
+        String type = "";
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            money = cursor.getDouble(index_MONEY);
+            type = cursor.getString(index_TYPE);
+
+            Log.d("TransactionData", "Category: " + category + ", Type: " + type + ", Money: " + money);
+
+            TransactionModel transaction = new TransactionModel(type, category, money);
+
+            // Add the TransactionModel object to the list
+            transactionList.add(transaction);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return transactionList;
+    }
+
+    public void updateBudgetLeft(String category, double expenseAmount) {
+        //openToWrite();
+
+        // Retrieve the current budget left for the category
+        String[] budgetColumns = new String[] {
+                COLUMN_AMOUNT,
+                COLUMN_LEFT
+        };
+        String budgetSelection = COLUMN_BUDGET_CATEGORY + " = ?";
+        String[] budgetSelectionArgs = new String[] { category };
+
+        Cursor budgetCursor = sqLiteDatabase.query(
+                BUDGET_TABLE_NAME,
+                budgetColumns,
+                budgetSelection,
+                budgetSelectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (budgetCursor != null) {
+            if (budgetCursor.moveToFirst()) {
+                double currentBudgetAmount = budgetCursor.getDouble(0);
+                double currentBudgetLeft = budgetCursor.getDouble(1);
+
+                // Calculate the new budget left after subtracting the expense amount
+                double newBudgetLeft = currentBudgetLeft - expenseAmount;
+
+                // Update the budget left value in the DB_BUDGET table
+                ContentValues budgetValues = new ContentValues();
+                budgetValues.put(COLUMN_LEFT, newBudgetLeft);
+
+                sqLiteDatabase.update(
+                        BUDGET_TABLE_NAME,
+                        budgetValues,
+                        budgetSelection,
+                        budgetSelectionArgs
+                );
+            }
+            budgetCursor.close();
+        }
+
+        // Close the database connection
+        //close();
+    }
 
     public class SQLiteHelper extends SQLiteOpenHelper {
         public SQLiteHelper(Context context, String name,
@@ -361,6 +572,7 @@ public class SQLiteAdapter extends AppCompatActivity {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SCRIPT_CREATE_DATABASE);
+            db.execSQL(SCRIPT_CREATE_BUDGET_TABLE);
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,8 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout activityContainer;
     private LinearLayout btnHome, btnAct, btnStat;
     private RelativeLayout balanceContainer;
+    private RelativeLayout budgetContainer;
     private ImageView balanceIcon;
     private SQLiteAdapter mySQLiteAdapter;
+    private ImageView userIcon;
+    // Define a constant for the request code
+    private static final int REQUEST_CODE_PICK_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         expenseTV = findViewById(R.id.expenseTV);
         balanceContainer = findViewById(R.id.balanceContainer);
         balanceIcon =findViewById(R.id.balanceIcon);
+        budgetContainer = findViewById(R.id.budgetContainer);
         activityContainer = findViewById(R.id.activityContainer);
         allTV = findViewById(R.id.allTV);
+        userIcon = findViewById(R.id.userIcon);
 
         // Initialize your SQLiteAdapter
         mySQLiteAdapter = new SQLiteAdapter(this);
@@ -113,6 +121,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        budgetContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event here
+                // You can navigate to a new page using Intent
+                startActivity(new Intent(MainActivity.this, BudgetList.class));
+            }
+        });
+
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,11 +162,66 @@ public class MainActivity extends AppCompatActivity {
         double cardBalance = 5000.00; // Fetch balance from your data source
         moneyTextView.setText("RM" + cardBalance);
 
-        // Populate recent activities ListView (you need to implement an adapter)
-        //ArrayList<String> recentActivities = fetchRecentActivities(); // Implement this
-        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentActivities);
-        //recentActivitiesListView.setAdapter(adapter);
+        // Set a click listener for the userIcon ImageView to open the gallery
+        ImageView userIcon = findViewById(R.id.userIcon);
+        userIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImageFromGallery();
+            }
+        });
+        // Load the saved image URI and set it to userIcon
+        //loadSavedImageUri();
     }
+    // Method to open the image picker
+    private void selectImageFromGallery() {
+        // Create an intent to open the image picker
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*"); // Specify the type of content (images in this case)
+
+        // Start the intent to pick an image
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+    }
+
+
+
+    // Override onActivityResult to handle the selected image
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
+            // Get the selected image URI
+            Uri selectedImageUri = data.getData();
+
+            // Now you can use this URI to set the profile picture or do other operations
+            // For example, you can load the image into an ImageView
+            ImageView userIcon = findViewById(R.id.userIcon);
+            userIcon.setImageURI(selectedImageUri);
+
+            // You can also save the selected image URI for future use (e.g., saving it in SharedPreferences)
+            saveImageUriToSharedPreferences(selectedImageUri);
+        }
+    }
+
+    // Method to save the image URI to SharedPreferences
+    private void saveImageUriToSharedPreferences(Uri imageUri) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("imageUri", imageUri.toString());
+        editor.apply();
+    }
+    // Method to load the saved image URI and set it to userIcon
+    /*private void loadSavedImageUri() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String savedImageUriString = sharedPreferences.getString("imageUri", null);
+
+        if (savedImageUriString != null) {
+            Uri savedImageUri = Uri.parse(savedImageUriString);
+            userIcon.setImageURI(savedImageUri);
+        }
+    }*/
+
 
     public void showUsernamePopup(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
