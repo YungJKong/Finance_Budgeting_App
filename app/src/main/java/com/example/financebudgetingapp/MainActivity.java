@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         double savedExpenseAmount = expenses;
         incomeTV.setText(String.format(Locale.getDefault(), "%.2f", savedIncomeAmount));
         expenseTV.setText(String.format(Locale.getDefault(), "%.2f", savedExpenseAmount));
-        
+
         //mySQLiteAdapter.populateData(activityContainer);
 
         allTV.setOnClickListener(new View.OnClickListener() {

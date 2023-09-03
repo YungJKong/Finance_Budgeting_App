@@ -132,6 +132,7 @@ public class SQLiteAdapter extends AppCompatActivity {
 
     public void populateDataLayout(LinearLayout dataLayout) {
         String[] columns = new String[] {
+                COLUMN_TYPE,
                 COLUMN_CATEGORY,
                 COLUMN_MONEY,
                 COLUMN_NOTE,
@@ -147,7 +148,7 @@ public class SQLiteAdapter extends AppCompatActivity {
                 null,
                 null
         );
-
+        int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
         int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
         int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
         int index_NOTE = cursor.getColumnIndex(COLUMN_NOTE);
@@ -156,6 +157,7 @@ public class SQLiteAdapter extends AppCompatActivity {
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
+            String type = cursor.getString(index_TYPE);
             String category = cursor.getString(index_CATEGORY);
             double money = cursor.getDouble(index_MONEY);
             String note = cursor.getString(index_NOTE);
@@ -188,7 +190,14 @@ public class SQLiteAdapter extends AppCompatActivity {
             tv_note.setTextSize(18);
             tv_date.setTextSize(18);
             tv_category.setText(category);
-            tv_money.setText(String.format("%.2f", money));
+            if ("Incomes".equals(type)) {
+                tv_money.setTextColor(Color.GREEN);
+                tv_money.setText(String.format("%.2f", money));
+            } else if ("Expenses".equals(type) || "Savings".equals(type)) {
+                tv_money.setTextColor(Color.RED);
+                tv_money.setText("-"+String.format("%.2f", money));
+            }
+
             tv_money.setGravity(Gravity.END);
             tv_note.setText(note);
             tv_date.setText(date);
@@ -275,6 +284,7 @@ public class SQLiteAdapter extends AppCompatActivity {
 
         cursor.close();
     }
+
     public double incomeAll() {
         String[] columns = new String[] {
                 COLUMN_MONEY,
