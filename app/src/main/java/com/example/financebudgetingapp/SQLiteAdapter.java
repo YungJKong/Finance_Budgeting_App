@@ -163,6 +163,15 @@ public class SQLiteAdapter extends AppCompatActivity {
             String note = cursor.getString(index_NOTE);
             String date = cursor.getString(index_DATE);
 
+            // Create a separator line
+            View separator = new View(context);
+            separator.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1)); // Adjust the height as needed
+            separator.setBackgroundColor(Color.GRAY); // Set the separator color
+
+            // Add the separator to the dataLayout
+            dataLayout.addView(separator);
+
 
             LinearLayout ll = new LinearLayout(context);
             ll.setOrientation(LinearLayout.HORIZONTAL);
@@ -184,7 +193,7 @@ public class SQLiteAdapter extends AppCompatActivity {
             TextView tv_money = new TextView(context);
             TextView tv_note = new TextView(context);
             TextView tv_date = new TextView(context);
-
+            tv_money.setTypeface(null, Typeface.BOLD);
             tv_category.setTextSize(18);
             tv_money.setTextSize(18);
             tv_note.setTextSize(18);
@@ -202,6 +211,19 @@ public class SQLiteAdapter extends AppCompatActivity {
             tv_note.setText(note);
             tv_date.setText(date);
             tv_date.setGravity(Gravity.END);
+
+            // Create layout parameters for TextViews with margins
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, // Width
+                    LinearLayout.LayoutParams.WRAP_CONTENT  // Height
+            );
+            layoutParams.setMargins(0, 16, 0, 8); // Left, Top, Right, Bottom margins (adjust values as needed)
+
+// Apply layout parameters to TextViews
+            tv_category.setLayoutParams(layoutParams);
+            tv_money.setLayoutParams(layoutParams);
+            tv_note.setLayoutParams(layoutParams);
+            tv_date.setLayoutParams(layoutParams);
 
             ll_left.addView(tv_category);
             ll_left.addView(tv_note);
@@ -231,7 +253,7 @@ public class SQLiteAdapter extends AppCompatActivity {
                 null,
                 null,
                 COLUMN_DATE + " DESC", // Order by date in descending order
-                "2"
+                "3"
         );
         int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
         int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
@@ -245,6 +267,14 @@ public class SQLiteAdapter extends AppCompatActivity {
             String category = cursor.getString(index_CATEGORY);
             double money = cursor.getDouble(index_MONEY);
             String date = cursor.getString(index_DATE);
+
+            View separator = new View(context);
+            separator.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1)); // Adjust the height as needed
+            separator.setBackgroundColor(Color.GRAY); // Set the separator color
+
+            // Add the separator to the dataLayout
+            activityContainer.addView(separator);
 
             LinearLayout ll = new LinearLayout(context);
             ll.setOrientation(LinearLayout.HORIZONTAL);
@@ -262,7 +292,7 @@ public class SQLiteAdapter extends AppCompatActivity {
             TextView tv_category = new TextView(context);
             TextView tv_money = new TextView(context);
             TextView tv_date = new TextView(context);
-
+            tv_money.setTypeface(null, Typeface.BOLD);
             tv_category.setTextSize(22);
             tv_category.setTypeface(null, Typeface.BOLD);
             tv_money.setTextSize(18);
