@@ -1,5 +1,6 @@
 package com.example.financebudgetingapp;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,13 +10,17 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class SQLiteAdapter extends AppCompatActivity {
     public static final String MYDATABASE_NAME = "MY_DATABASE";
@@ -381,6 +386,66 @@ public class SQLiteAdapter extends AppCompatActivity {
         return money;
     }
 
+    public float queryTotalIncomeForMonthAndYear(int year, int month) {
+        float totalIncome = 0;
+
+        // Define the selection clause to filter by month and year
+        String selection = COLUMN_TYPE + " = ? AND SUBSTR(" + COLUMN_DATE + ", 1, 7) = ?";
+        String[] selectionArgs = { "Incomes", String.format(Locale.US, "%04d-%02d", year, month) };
+
+        String[] columns = new String[] {
+                "SUM(" + COLUMN_MONEY + ")"
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+
+                totalIncome = cursor.getFloat(0);;
+            }
+            cursor.close();
+        }
+
+        return totalIncome;
+    }
+    public float queryTotalExpenseForMonthAndYear(int year, int month) {
+        float totalExpenses = 0;
+
+        // Define the selection clause to filter by month and year
+        String selection = COLUMN_TYPE + " = ? AND SUBSTR(" + COLUMN_DATE + ", 1, 7) = ?";
+        String[] selectionArgs = { "Expenses", String.format(Locale.US, "%04d-%02d", year, month) };
+
+        String[] columns = new String[] {
+                "SUM(" + COLUMN_MONEY + ")"
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                totalExpenses = cursor.getFloat(0);
+            }
+            cursor.close();
+        }
+        return totalExpenses;
+    }
 
 
     public class SQLiteHelper extends SQLiteOpenHelper {

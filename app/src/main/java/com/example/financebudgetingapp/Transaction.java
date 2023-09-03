@@ -65,6 +65,7 @@ public class Transaction extends AppCompatActivity {
             public void onClick(View view) {
                 // Handle the Statistics button click here
                 // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
+                startActivity(new Intent(Transaction.this, com.example.financebudgetingapp.Statistics.class));
             }
         });
 
