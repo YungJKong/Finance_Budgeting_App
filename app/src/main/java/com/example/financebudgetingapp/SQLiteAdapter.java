@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -40,6 +42,61 @@ public class SQLiteAdapter extends AppCompatActivity {
     private SQLiteDatabase sqLiteDatabase;
     private Context context;
 
+
+    public float queryTotalIncome() {
+        float totalIncome = 0;
+
+        String[] columns = new String[] {
+                "SUM(" + COLUMN_MONEY + ")"
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                COLUMN_TYPE + "=?",
+                new String[]{"Income"},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                totalIncome = cursor.getFloat(0);
+            }
+            cursor.close();
+        }
+
+        return totalIncome;
+    }
+
+
+    public float queryTotalExpense() {
+        float totalExpense = 0;
+
+        String[] columns = new String[] {
+                "SUM(" + COLUMN_MONEY + ")"
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                COLUMN_TYPE + "=?",
+                new String[]{"Expense"},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                totalExpense = cursor.getFloat(0);
+            }
+            cursor.close();
+        }
+
+        return totalExpense;
+    }
 
     public SQLiteAdapter(Context c){
         context = c;
@@ -149,6 +206,75 @@ public class SQLiteAdapter extends AppCompatActivity {
 
         cursor.close();
     }
+    public void populateData(LinearLayout activityContainer) {
+        String[] columns = new String[] {
+                COLUMN_CATEGORY,
+                COLUMN_MONEY,
+                COLUMN_DATE
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                COLUMN_DATE + " DESC", // Order by date in descending order
+                "2"
+        );
+
+        int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
+        int index_DATE = cursor.getColumnIndex(COLUMN_DATE);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            String category = cursor.getString(index_CATEGORY);
+            double money = cursor.getDouble(index_MONEY);
+            String date = cursor.getString(index_DATE);
+
+            LinearLayout ll = new LinearLayout(context);
+            ll.setOrientation(LinearLayout.HORIZONTAL);
+
+            LinearLayout ll_left = new LinearLayout(context);
+            ll_left.setOrientation(LinearLayout.VERTICAL);
+            ll_left.setLayoutParams(new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+
+            LinearLayout ll_right = new LinearLayout(context);
+            ll_right.setOrientation(LinearLayout.VERTICAL);
+            ll_right.setLayoutParams(new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+
+            TextView tv_category = new TextView(context);
+            TextView tv_money = new TextView(context);
+            TextView tv_date = new TextView(context);
+
+            tv_category.setTextSize(22);
+            tv_category.setTypeface(null, Typeface.BOLD);
+            tv_money.setTextSize(18);
+            tv_date.setTextSize(18);
+            tv_category.setText(category);
+            tv_money.setText(String.format("RM %.2f", money));
+            tv_money.setGravity(Gravity.END);
+            tv_date.setText(date);
+            tv_date.setGravity(Gravity.END);
+
+            tv_category.setTextColor(Color.parseColor("#2980B9"));
+
+            ll_left.addView(tv_category);
+            ll_right.addView(tv_money);
+            ll_right.addView(tv_date);
+            ll.addView(ll_left);
+            ll.addView(ll_right);
+            activityContainer.addView(ll);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+    }
     public double incomeAll() {
         String[] columns = new String[] {
                 COLUMN_MONEY,
@@ -206,6 +332,8 @@ public class SQLiteAdapter extends AppCompatActivity {
         return money;
     }
 
+
+
     public class SQLiteHelper extends SQLiteOpenHelper {
         public SQLiteHelper(Context context, String name,
                             CursorFactory factory, int version) {
@@ -219,6 +347,5 @@ public class SQLiteAdapter extends AppCompatActivity {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
     }
-
 
 }

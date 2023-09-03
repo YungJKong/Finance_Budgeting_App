@@ -4,6 +4,7 @@ package com.example.financebudgetingapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,9 +31,9 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView usernameTextView, incomeTV, expenseTV;
+    private TextView usernameTextView, incomeTV, expenseTV, allTV;
     private TextView moneyTextView;
-    private ListView recentActivitiesListView;
+    private LinearLayout activityContainer;
     private ImageButton btnHome, btnAct, btnStat;
     private RelativeLayout balanceContainer;
     private ImageView balanceIcon;
@@ -44,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         usernameTextView = findViewById(R.id.usernameTextView);
         moneyTextView = findViewById(R.id.moneyTextView);
-        recentActivitiesListView = findViewById(R.id.recentActivitiesListView);
         btnHome = findViewById(R.id.btnHome);
         btnAct = findViewById(R.id.btnAct);
         btnStat = findViewById(R.id.btnStat);
@@ -52,6 +53,25 @@ public class MainActivity extends AppCompatActivity {
         expenseTV = findViewById(R.id.expenseTV);
         balanceContainer = findViewById(R.id.balanceContainer);
         balanceIcon =findViewById(R.id.balanceIcon);
+        activityContainer = findViewById(R.id.activityContainer);
+        allTV = findViewById(R.id.allTV);
+
+        // Initialize your SQLiteAdapter
+        mySQLiteAdapter = new SQLiteAdapter(this);
+
+        // Open the database for reading
+        mySQLiteAdapter.openToRead();
+
+        // Query the database to get the sum of income and expense
+        float totalIncome = mySQLiteAdapter.queryTotalIncome();
+        float totalExpense = mySQLiteAdapter.queryTotalExpense();
+
+        // Close the database after querying
+        mySQLiteAdapter.close();
+
+        // Display the income and expense values
+        incomeTV.setText(String.format(Locale.getDefault(), "%.2f", totalIncome));
+        expenseTV.setText(String.format(Locale.getDefault(), "%.2f", totalExpense));
 
         // Initialize SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -65,14 +85,24 @@ public class MainActivity extends AppCompatActivity {
         mySQLiteAdapter.openToRead();
         double incomes = mySQLiteAdapter.incomeAll();
         double expenses = mySQLiteAdapter.expensesAll();
+        mySQLiteAdapter.populateData(activityContainer);
         mySQLiteAdapter.close();
         // Retrieve stored amounts (default to 0 if not available)
         double savedIncomeAmount = incomes;
         double savedExpenseAmount = expenses;
         incomeTV.setText(String.format(Locale.getDefault(), "%.2f", savedIncomeAmount));
         expenseTV.setText(String.format(Locale.getDefault(), "%.2f", savedExpenseAmount));
+        
+        //mySQLiteAdapter.populateData(activityContainer);
 
-
+        allTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event here
+                // You can navigate to a new page using Intent
+                startActivity(new Intent(MainActivity.this, Transaction.class));
+            }
+        });
 
         balanceContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,13 +144,9 @@ public class MainActivity extends AppCompatActivity {
         moneyTextView.setText("RM" + cardBalance);
 
         // Populate recent activities ListView (you need to implement an adapter)
-        ArrayList<String> recentActivities = fetchRecentActivities(); // Implement this
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentActivities);
-        recentActivitiesListView.setAdapter(adapter);
-
-
-
-
+        //ArrayList<String> recentActivities = fetchRecentActivities(); // Implement this
+        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentActivities);
+        //recentActivitiesListView.setAdapter(adapter);
     }
 
     public void showUsernamePopup(View view) {
@@ -156,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void showPopup(View view) {
+    /*public void showPopup(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter Amount");
 
@@ -236,71 +262,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alertDialog.show(); // Show the AlertDialog
-    }
+    }*/
 
-    public class Transaction {
-        private String name;
-        private String date;
-        private double amount;
-
-        public Transaction(String name, String date, double amount) {
-            this.name = name;
-            this.date = date;
-            this.amount = amount;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public double getAmount() {
-            return amount;
-        }
-    }
-
-
-    private ArrayList<String> fetchRecentActivities() {
-        ArrayList<String> recentActivities = new ArrayList<>();
-
-        // Assume you have a list of Activity objects
-        List<Transaction> activityList = getActivitiesFromDataSource(); // Implement this method
-
-        // Display the most recent activities
-        int maxActivitiesToShow = 5; // You can adjust this as needed
-        for (int i = 0; i < Math.min(activityList.size(), maxActivitiesToShow); i++) {
-            String activityDescription = formatActivityDescription(activityList.get(i)); // Implement this method
-            recentActivities.add(activityDescription);
-        }
-
-        return recentActivities;
-    }
-
-    // ... Other code ...
-
-    // Method to fetch activities from your data source (database, API, etc.)
-    private List<Transaction> getActivitiesFromDataSource() {
-        // Implement this method to retrieve a list of recent activities
-        // For this example, let's assume you have a list of Activity objects
-        List<Transaction> activityList = new ArrayList<>();
-
-        // Populate the activityList with data from your data source
-        // Example:
-        activityList.add(new Transaction("Grocery shopping", "2023-08-10", -50.00));
-        activityList.add(new Transaction("Dinner at restaurant", "2023-08-09", -30.00));
-        // ...
-
-        return activityList;
-    }
-
-    // Method to format activity description for display
-    private String formatActivityDescription(Transaction activity) {
-        String formattedDescription = activity.getName() + " on " + activity.getDate() +
-                " (" + (activity.getAmount() >= 0 ? "+" : "-") + "RM" + Math.abs(activity.getAmount()) + ")";
-        return formattedDescription;
-    }
-    
 }
