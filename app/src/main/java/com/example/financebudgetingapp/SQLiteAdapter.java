@@ -191,7 +191,7 @@ public class SQLiteAdapter extends AppCompatActivity {
             tv_date.setTextSize(18);
             tv_category.setText(category);
             if ("Incomes".equals(type)) {
-                tv_money.setTextColor(Color.GREEN);
+                tv_money.setTextColor(Color.parseColor("#28B463"));
                 tv_money.setText(String.format("%.2f", money));
             } else if ("Expenses".equals(type) || "Savings".equals(type)) {
                 tv_money.setTextColor(Color.RED);
@@ -217,6 +217,7 @@ public class SQLiteAdapter extends AppCompatActivity {
     }
     public void populateData(LinearLayout activityContainer) {
         String[] columns = new String[] {
+                COLUMN_TYPE,
                 COLUMN_CATEGORY,
                 COLUMN_MONEY,
                 COLUMN_DATE
@@ -232,7 +233,7 @@ public class SQLiteAdapter extends AppCompatActivity {
                 COLUMN_DATE + " DESC", // Order by date in descending order
                 "2"
         );
-
+        int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
         int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
         int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
         int index_DATE = cursor.getColumnIndex(COLUMN_DATE);
@@ -240,6 +241,7 @@ public class SQLiteAdapter extends AppCompatActivity {
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
+            String type = cursor.getString(index_TYPE);
             String category = cursor.getString(index_CATEGORY);
             double money = cursor.getDouble(index_MONEY);
             String date = cursor.getString(index_DATE);
@@ -266,7 +268,14 @@ public class SQLiteAdapter extends AppCompatActivity {
             tv_money.setTextSize(18);
             tv_date.setTextSize(18);
             tv_category.setText(category);
-            tv_money.setText(String.format("RM %.2f", money));
+            //tv_money.setText(String.format("RM %.2f", money));
+            if ("Incomes".equals(type)) {
+                tv_money.setTextColor(Color.parseColor("#28B463"));
+                tv_money.setText(String.format("RM %.2f", money));
+            } else if ("Expenses".equals(type) || "Savings".equals(type)) {
+                tv_money.setTextColor(Color.RED);
+                tv_money.setText("-"+String.format("RM %.2f", money));
+            }
             tv_money.setGravity(Gravity.END);
             tv_date.setText(date);
             tv_date.setGravity(Gravity.END);
