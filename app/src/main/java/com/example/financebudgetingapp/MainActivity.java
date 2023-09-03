@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView usernameTextView, incomeTV, expenseTV, allTV;
     private TextView moneyTextView;
     private LinearLayout activityContainer;
-    private ImageButton btnHome, btnAct, btnStat;
+    private LinearLayout btnHome, btnAct, btnStat;
     private RelativeLayout balanceContainer;
     private ImageView balanceIcon;
     private SQLiteAdapter mySQLiteAdapter;
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Handle the Home button click here
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
             }
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         btnAct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Handle the Activities button click here
                 // For example: startActivity(new Intent(MainActivity.this, ActivitiesActivity.class));
                 startActivity(new Intent(MainActivity.this, com.example.financebudgetingapp.Transaction.class));
