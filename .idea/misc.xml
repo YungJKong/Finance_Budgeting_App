@@ -6,6 +6,8 @@
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_add_transaction.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_main.xml" value="0.245018115942029" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_splash.xml" value="0.245018115942029" />
+        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_sqlite_adapter.xml" value="0.20380434782608695" />
+        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_statistics.xml" value="0.20380434782608695" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_transaction.xml" value="0.245018115942029" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/bottom_navigation.xml" value="0.245018115942029" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/input_dialog.xml" value="0.2171875" />
@@ -62,5 +64,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.20380434782608695" />
+      </ProjectState>
+    </option>
   </component>
 </project>

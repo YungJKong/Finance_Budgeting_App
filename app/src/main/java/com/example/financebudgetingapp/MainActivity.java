@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Handle the Statistics button click here
                 // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
+                startActivity(new Intent(MainActivity.this, com.example.financebudgetingapp.Statistics.class));
             }
         });
 

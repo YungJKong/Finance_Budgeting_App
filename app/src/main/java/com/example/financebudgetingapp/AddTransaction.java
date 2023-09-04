@@ -289,7 +289,7 @@ public class AddTransaction extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, year1, monthOfYear, dayOfMonth) -> {
-                    String selectedDate = (monthOfYear + 1) + "/" + dayOfMonth + "/" + year1;
+                    String selectedDate = year1 + "-" + String.format("%02d", monthOfYear + 1) + "-" + dayOfMonth;
                     date = selectedDate;
                     dateButton.setText(selectedDate);
                 },

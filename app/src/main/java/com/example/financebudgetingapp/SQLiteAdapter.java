@@ -1,5 +1,6 @@
 package com.example.financebudgetingapp;
 
+import android.app.Activity;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,12 +16,15 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.financebudgetingapp.model.Budget;
 import com.example.financebudgetingapp.model.TransactionModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class SQLiteAdapter extends AppCompatActivity {
     public static final String MYDATABASE_NAME = "MY_DATABASE";
