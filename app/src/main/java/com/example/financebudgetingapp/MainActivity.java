@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             usernameTextView.setText("Hi, " + savedUsername);
         }
 
-        SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        //SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         mySQLiteAdapter = new SQLiteAdapter(this);
         mySQLiteAdapter.openToRead();
         double incomes = mySQLiteAdapter.incomeAll();
@@ -163,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
         double cardBalance = 5000.00; // Fetch balance from your data source
         moneyTextView.setText("RM" + cardBalance);
 
-        // Set a click listener for the userIcon ImageView to open the gallery
-        ImageView userIcon = findViewById(R.id.userIcon);
+
+
         userIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,8 +173,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // Load the saved image URI and set it to userIcon
-        //loadSavedImageUri();
+        loadSavedImageUri();
     }
+
     // Method to open the image picker
     private void selectImageFromGallery() {
         // Create an intent to open the image picker
@@ -183,8 +185,6 @@ public class MainActivity extends AppCompatActivity {
         // Start the intent to pick an image
         startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
     }
-
-
 
     // Override onActivityResult to handle the selected image
     @Override
@@ -207,21 +207,31 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to save the image URI to SharedPreferences
     private void saveImageUriToSharedPreferences(Uri imageUri) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences1.edit();
         editor.putString("imageUri", imageUri.toString());
         editor.apply();
     }
     // Method to load the saved image URI and set it to userIcon
-    /*private void loadSavedImageUri() {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String savedImageUriString = sharedPreferences.getString("imageUri", null);
+    private void loadSavedImageUri() {
+        SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String savedImageUriString = sharedPreferences1.getString("imageUri", null);
 
         if (savedImageUriString != null) {
-            Uri savedImageUri = Uri.parse(savedImageUriString);
-            userIcon.setImageURI(savedImageUri);
+            try {
+                Uri savedImageUri = Uri.parse(savedImageUriString);
+                userIcon.setImageURI(savedImageUri);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("ImageLoadingError", "Error loading saved image URI: " + e.getMessage());
+                // Handle the exception gracefully, such as displaying a default image
+                userIcon.setImageResource(R.drawable.user); // Set the default image
+            }
+        } else {
+            // Handle the case where there's no saved image URI (e.g., display a default image)
+            userIcon.setImageResource(R.drawable.user); // Set the default image
         }
-    }*/
+    }
 
 
     public void showUsernamePopup(View view) {
@@ -255,88 +265,5 @@ public class MainActivity extends AppCompatActivity {
 
         builder.show();
     }
-
-
-    /*public void showPopup(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter Amount");
-
-        // Set up the input
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        builder.setView(input);
-
-        // Set up the buttons
-        builder.setPositiveButton("OK", null); // Set OK button initially to null
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        final AlertDialog alertDialog = builder.create(); // Create the AlertDialog
-
-        // Add a text changed listener to the input EditText
-        input.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // No action needed
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Check if the input is empty
-                boolean isEmpty = s.toString().trim().isEmpty();
-
-                // Enable or disable the OK button based on whether the input is empty
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!isEmpty);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // No action needed
-            }
-        });
-
-        // Set the positive button's click listener
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                // Initially disable the OK button
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
-                // Set the click listener for the OK button
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String amount = input.getText().toString();
-                        // Convert the entered amount to a float
-                        float enteredAmount = Float.parseFloat(amount);
-
-                        if (!amount.isEmpty()) { // Check if the amount is not empty
-                            try {
-                                if (view.getId() == R.id.incomeBox) {
-                                    incomeTV.setText("RM " + amount);
-                                    SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                                    sharedPreferences1.edit().putFloat("incomeAmount", enteredAmount).apply();
-                                } else if (view.getId() == R.id.expenseBox) {
-                                    expenseTV.setText("RM " + amount);
-                                    SharedPreferences sharedPreferences1 = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                                    sharedPreferences1.edit().putFloat("expenseAmount", enteredAmount).apply();
-                                }
-                                alertDialog.dismiss(); // Close the dialog after setting the amount
-                            } catch (NumberFormatException e) {
-                                // Show an error message if the entered amount is not a valid number
-                                Toast.makeText(MainActivity.this, "Please enter a valid amount", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-            }
-        });
-
-        alertDialog.show(); // Show the AlertDialog
-    }*/
 
 }

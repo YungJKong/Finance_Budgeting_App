@@ -65,7 +65,7 @@ public class CreateBudget extends AppCompatActivity {
             }
         });
 
-        btnHome = findViewById(R.id.btnHome);
+        /*btnHome = findViewById(R.id.btnHome);
         btnAct = findViewById(R.id.btnAct);
         btnStat = findViewById(R.id.btnStat);
         btnHome.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +92,7 @@ public class CreateBudget extends AppCompatActivity {
                 // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
                 startActivity(new Intent(CreateBudget.this, com.example.financebudgetingapp.Statistics.class));
             }
-        });
-
-
+        });*/
     }
 
     @Override

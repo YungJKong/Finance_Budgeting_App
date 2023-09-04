@@ -28,7 +28,7 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/user"
             android:clickable="true"
-            android:onClick="selectImageFromGallery"/>
+            android:onClick="selectImageFromGallery" />
 
         <TextView
             android:id="@+id/usernameTextView"

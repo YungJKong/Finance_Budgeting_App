@@ -54,7 +54,7 @@ public class BudgetList extends AppCompatActivity {
             }
         });
 
-        btnHome = findViewById(R.id.btnHome);
+        /*btnHome = findViewById(R.id.btnHome);
         btnAct = findViewById(R.id.btnAct);
         btnStat = findViewById(R.id.btnStat);
         btnHome.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class BudgetList extends AppCompatActivity {
                 // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
                 startActivity(new Intent(BudgetList.this, com.example.financebudgetingapp.Statistics.class));
             }
-        });
+        });*/
     }
 
     private List<Budget> getBudgetsFromDatabase() {
