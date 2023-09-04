@@ -413,6 +413,68 @@ public class SQLiteAdapter extends AppCompatActivity {
         return money;
     }
 
+    public float queryTotalIncomeForMonthAndYear(int year, int month) {
+        float totalIncome = 0;
+
+        // Define the selection clause to filter by month and year
+        String selection = COLUMN_TYPE + " = ? AND SUBSTR(" + COLUMN_DATE + ", 1, 7) = ?";
+        String[] selectionArgs = { "Incomes", String.format(Locale.US, "%04d-%02d", year, month) };
+
+        String[] columns = new String[] {
+                "SUM(" + COLUMN_MONEY + ")"
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+
+                totalIncome = cursor.getFloat(0);;
+            }
+            cursor.close();
+        }
+
+        return totalIncome;
+    }
+    public float queryTotalExpenseForMonthAndYear(int year, int month) {
+        float totalExpenses = 0;
+
+        // Define the selection clause to filter by month and year
+        String selection = COLUMN_TYPE + " = ? AND SUBSTR(" + COLUMN_DATE + ", 1, 7) = ?";
+        String[] selectionArgs = { "Expenses", String.format(Locale.US, "%04d-%02d", year, month) };
+
+        String[] columns = new String[] {
+                "SUM(" + COLUMN_MONEY + ")"
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                totalExpenses = cursor.getFloat(0);
+            }
+            cursor.close();
+        }
+        return totalExpenses;
+    }
+
+
     public long insertBudget(String category, double amount, double left) {
 
         ContentValues contentValues = new ContentValues();

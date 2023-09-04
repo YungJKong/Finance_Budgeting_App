@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.financebudgetingapp.model.Budget;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class BudgetList extends AppCompatActivity {
 
+    private LinearLayout btnHome, btnAct, btnStat;
     private ListView budgetListView;
     private SQLiteAdapter sqlAdapter;
     private Button budgetButton;
@@ -49,6 +51,35 @@ public class BudgetList extends AppCompatActivity {
             public void onClick(View view) {
                 // Handle the Home button click here
                 startActivity(new Intent(BudgetList.this, MainActivity.class));
+            }
+        });
+
+        btnHome = findViewById(R.id.btnHome);
+        btnAct = findViewById(R.id.btnAct);
+        btnStat = findViewById(R.id.btnStat);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Home button click here
+                startActivity(new Intent(BudgetList.this, MainActivity.class));
+            }
+        });
+
+        btnAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Activities button click here
+                // For example: startActivity(new Intent(MainActivity.this, ActivitiesActivity.class));
+                startActivity(new Intent(BudgetList.this, com.example.financebudgetingapp.Transaction.class));
+            }
+        });
+
+        btnStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Statistics button click here
+                // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
+                startActivity(new Intent(BudgetList.this, com.example.financebudgetingapp.Statistics.class));
             }
         });
     }

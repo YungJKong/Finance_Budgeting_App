@@ -6,8 +6,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/llbudgetlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -33,11 +34,11 @@
                 android:id="@+id/tv_budgetlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/btnbudgetlistBack"
                 android:text="Budget List"
-                android:textSize="24sp"
                 android:textColor="@color/black"
-                android:layout_centerVertical="true"/>
+                android:textSize="24sp" />
         </RelativeLayout>
 
 
@@ -46,23 +47,35 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/box5"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/box5"
+            android:text="Create Budget"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="Create Budget" />
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/budgetListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="502dp"
             android:divider="@android:color/darker_gray"
             android:dividerHeight="1dp"
-            android:padding="16dp" >
+            android:padding="16dp">
 
         </ListView>
 
     </LinearLayout>
+
+    <include
+        android:id="@+id/bottomNavigation"
+        layout="@layout/bottom_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llbudgetlist"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="-1dp"/>
 
 </RelativeLayout>

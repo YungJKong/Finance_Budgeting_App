@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.financebudgetingapp" >
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,17 +14,19 @@
         android:theme="@style/Theme.FinanceBudgetingApp">
         <activity
             android:name=".BudgetList"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".CreateBudget"
-            android:exported="true" />
+            android:exported="false" />
         android:theme="@style/Theme.FinanceBudgetingApp">
+
         <activity
             android:name=".Statistics"
             android:exported="false" />
         <activity
             android:name=".SQLiteAdapter"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".CreditCard"
             android:exported="false" />

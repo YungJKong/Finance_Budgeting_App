@@ -7,8 +7,9 @@
     tools:context=".CreateBudget">
 
     <LinearLayout
+        android:id="@+id/layoutcreatebudget"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -91,6 +92,20 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="Save Budget" />
+
+
     </LinearLayout>
+
+    <include
+        android:id="@+id/bottomNavigation"
+        layout="@layout/bottom_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutcreatebudget"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginBottom="-1dp" />
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.financebudgetingapp.model.TransactionModel;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class CreateBudget extends AppCompatActivity {
 
+    private LinearLayout btnHome, btnAct, btnStat;
     private EditText categoryEditText;
     private EditText amountEditText;
     private Button createBudgetButton;
@@ -60,6 +62,35 @@ public class CreateBudget extends AppCompatActivity {
             public void onClick(View view) {
                 // Handle the Home button click here
                 startActivity(new Intent(CreateBudget.this, BudgetList.class));
+            }
+        });
+
+        btnHome = findViewById(R.id.btnHome);
+        btnAct = findViewById(R.id.btnAct);
+        btnStat = findViewById(R.id.btnStat);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Home button click here
+                startActivity(new Intent(CreateBudget.this, MainActivity.class));
+            }
+        });
+
+        btnAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Activities button click here
+                // For example: startActivity(new Intent(MainActivity.this, ActivitiesActivity.class));
+                startActivity(new Intent(CreateBudget.this, com.example.financebudgetingapp.Transaction.class));
+            }
+        });
+
+        btnStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the Statistics button click here
+                // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
+                startActivity(new Intent(CreateBudget.this, com.example.financebudgetingapp.Statistics.class));
             }
         });
 
