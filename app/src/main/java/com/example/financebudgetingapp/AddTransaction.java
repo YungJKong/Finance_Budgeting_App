@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -178,17 +179,31 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
+
             }
         });
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sMoney = amountEditText.getText().toString();
-                money = Float.parseFloat(sMoney);
-                //SQL Adapter Open To Write
-                mySQLiteAdapter.openToWrite();
-                mySQLiteAdapter.insert(type,money,wallet,category,note,date);
-                mySQLiteAdapter.close();
+                if (sMoney.isEmpty()) {
+                    Toast.makeText(AddTransaction.this, "Please enter an amount", Toast.LENGTH_SHORT).show();
+                } else if (category.isEmpty()) {
+                    Toast.makeText(AddTransaction.this, "Please choose a category", Toast.LENGTH_SHORT).show();
+                } else if(date.isEmpty()){
+                    Toast.makeText(AddTransaction.this, "Please choose a date", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // SQL Adapter Open To Write
+                    money = Float.parseFloat(sMoney);
+                    mySQLiteAdapter.openToWrite();
+                    mySQLiteAdapter.insert(type, money, wallet, category, note, date);
+                    mySQLiteAdapter.close();
+                    Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AddTransaction.this, Transaction.class));
+                }
+
+
 
             }
         });
