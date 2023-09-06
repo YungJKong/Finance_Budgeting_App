@@ -37,15 +37,22 @@
         <!-- Select Date Button -->
         <Button
             android:id="@+id/buttonStats"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Select Date" />
+            android:text="Select Date"
+            android:layout_gravity="center"
+            android:background="@drawable/box5"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
 
         <!-- TextViews for Expenses -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <!-- TextViews for Income -->
             <TextView
@@ -53,7 +60,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Income:" />
+                android:text="Income:"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <!-- TextViews for Expenses -->
             <TextView
@@ -61,7 +70,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Expense:" />
+                android:text="Expense:"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
