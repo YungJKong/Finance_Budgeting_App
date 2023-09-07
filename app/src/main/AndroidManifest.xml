@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.financebudgetingapp" >
+    package="com.example.financebudgetingapp">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -13,13 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinanceBudgetingApp">
         <activity
+            android:name=".IncomesButton"
+            android:exported="false" />
+        <activity
+            android:name=".ExpensesButton"
+            android:exported="false" />
+        <activity
             android:name=".BudgetList"
             android:exported="false" />
         <activity
             android:name=".CreateBudget"
             android:exported="false" />
-        android:theme="@style/Theme.FinanceBudgetingApp">
-
         <activity
             android:name=".Statistics"
             android:exported="false" />

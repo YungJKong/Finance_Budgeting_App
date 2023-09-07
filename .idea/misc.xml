@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_add_transaction.xml" value="0.20520833333333333" />
+        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_category_button.xml" value="0.33" />
+        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_expenses_button.xml" value="0.18885869565217392" />
+        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_incomes_button.xml" value="0.18885869565217392" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_main.xml" value="0.245018115942029" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_splash.xml" value="0.245018115942029" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_sqlite_adapter.xml" value="0.20380434782608695" />
