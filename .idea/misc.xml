@@ -4,9 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_add_transaction.xml" value="0.20520833333333333" />
-        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_category_button.xml" value="0.33" />
-        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_expenses_button.xml" value="0.18885869565217392" />
-        <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_incomes_button.xml" value="0.18885869565217392" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_main.xml" value="0.245018115942029" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_splash.xml" value="0.245018115942029" />
         <entry key="..\:/AndroidStudio/Finance_Budgeting_App/app/src/main/res/layout/activity_sqlite_adapter.xml" value="0.20380434782608695" />
@@ -26,6 +23,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box5.xml" value="0.20925925925925926" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box6.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box7.xml" value="0.2074074074074074" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box8.xml" value="0.3" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/box9.xml" value="0.2453125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/button_normal.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/button_pressed.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/drawable/button_selected.xml" value="0.18796296296296297" />
@@ -38,6 +37,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_budget_list.xml" value="0.2609375" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_create_budget.xml" value="0.33177083333333335" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_credit_card.xml" value="0.19635416666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_expenses_button.xml" value="0.3625" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_incomes_button.xml" value="0.3625" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_splash.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Financebudgetingapp/app/src/main/res/layout/activity_sqlite_adapter.xml" value="0.25" />
