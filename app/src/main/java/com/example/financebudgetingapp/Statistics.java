@@ -48,7 +48,7 @@ public class Statistics extends AppCompatActivity {
         mySQLiteAdapter.openToRead();
         
         mySQLiteAdapter.topCat(topCategory);
-        mySQLiteAdapter.close();
+        //mySQLiteAdapter.close();
 
         buttonStats.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +85,7 @@ public class Statistics extends AppCompatActivity {
         });
 
         // Find the PieChart view by its ID
-        /*PieChart pieChart = findViewById(R.id.pieChart);
+        PieChart pieChart = findViewById(R.id.pieChart);
 
 
         List<PieEntry> pieEntries = mySQLiteAdapter.getExpenseSumByCategory();
@@ -110,7 +110,7 @@ public class Statistics extends AppCompatActivity {
         pieChart.setHoleColor(android.R.color.transparent);
 
 // Refresh the chart
-        pieChart.invalidate();*/
+        pieChart.invalidate();
 
 
     }

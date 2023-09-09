@@ -391,65 +391,60 @@ public class SQLiteAdapter extends AppCompatActivity {
             String category = cursor.getString(index_CATEGORY);
             double money = cursor.getDouble(index_MONEY);
 
+            if ("Expenses".equals(type)) {
+                // Create a separator line
+                View separator = new View(context);
+                separator.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, 1)); // Adjust the height as needed
+                separator.setBackgroundColor(Color.GRAY); // Set the separator color
 
-            // Create a separator line
-            View separator = new View(context);
-            separator.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, 1)); // Adjust the height as needed
-            separator.setBackgroundColor(Color.GRAY); // Set the separator color
+                // Add the separator to the dataLayout
+                topCategory.addView(separator);
 
-            // Add the separator to the dataLayout
-            topCategory.addView(separator);
+                LinearLayout ll = new LinearLayout(context);
+                ll.setOrientation(LinearLayout.HORIZONTAL);
 
-            LinearLayout ll = new LinearLayout(context);
-            ll.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout ll_left = new LinearLayout(context);
+                ll_left.setOrientation(LinearLayout.VERTICAL);
+                ll_left.setLayoutParams(new LinearLayout.LayoutParams(
+                        0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
 
-            LinearLayout ll_left = new LinearLayout(context);
-            ll_left.setOrientation(LinearLayout.VERTICAL);
-            ll_left.setLayoutParams(new LinearLayout.LayoutParams(
-                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+                LinearLayout ll_right = new LinearLayout(context);
+                ll_right.setOrientation(LinearLayout.VERTICAL);
+                ll_right.setLayoutParams(new LinearLayout.LayoutParams(
+                        0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
 
-            LinearLayout ll_right = new LinearLayout(context);
-            ll_right.setOrientation(LinearLayout.VERTICAL);
-            ll_right.setLayoutParams(new LinearLayout.LayoutParams(
-                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
-
-            TextView tv_category = new TextView(context);
-            TextView tv_money = new TextView(context);
-            tv_money.setTypeface(null, Typeface.BOLD);
-            tv_category.setTextSize(18);
-            tv_money.setTextSize(18);
-            tv_category.setText(category);
-
-            // Determine the text color based on the type
-            if ("Incomes".equals(type)) {
-                tv_money.setTextColor(Color.parseColor("#28B463"));
-                tv_money.setText(String.format("%.2f", money));
-            } else if ("Expenses".equals(type) || "Savings".equals(type)) {
+                TextView tv_category = new TextView(context);
+                TextView tv_money = new TextView(context);
+                tv_money.setTypeface(null, Typeface.BOLD);
+                tv_category.setTextSize(18);
+                tv_money.setTextSize(18);
+                tv_category.setText(category);
+                tv_category.setTextColor(Color.BLACK);
                 tv_money.setTextColor(Color.RED);
                 tv_money.setText("-" + String.format("%.2f", money));
+
+                tv_money.setGravity(Gravity.END);
+
+
+                // Create layout parameters for TextViews with margins
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, // Width
+                        LinearLayout.LayoutParams.WRAP_CONTENT  // Height
+                );
+                layoutParams.setMargins(0, 16, 0, 8); // Left, Top, Right, Bottom margins (adjust values as needed)
+
+                // Apply layout parameters to TextViews
+                tv_category.setLayoutParams(layoutParams);
+                tv_money.setLayoutParams(layoutParams);
+
+                ll_left.addView(tv_category);
+                ll_right.addView(tv_money);
+
+                ll.addView(ll_left);
+                ll.addView(ll_right);
+                topCategory.addView(ll);
             }
-
-            tv_money.setGravity(Gravity.END);
-
-
-            // Create layout parameters for TextViews with margins
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, // Width
-                    LinearLayout.LayoutParams.WRAP_CONTENT  // Height
-            );
-            layoutParams.setMargins(0, 16, 0, 8); // Left, Top, Right, Bottom margins (adjust values as needed)
-
-            // Apply layout parameters to TextViews
-            tv_category.setLayoutParams(layoutParams);
-            tv_money.setLayoutParams(layoutParams);
-
-            ll_left.addView(tv_category);
-            ll_right.addView(tv_money);
-
-            ll.addView(ll_left);
-            ll.addView(ll_right);
-            topCategory.addView(ll);
 
             cursor.moveToNext();
         }
