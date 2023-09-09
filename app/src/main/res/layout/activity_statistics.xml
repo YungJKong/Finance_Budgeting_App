@@ -25,78 +25,107 @@
 
     </RelativeLayout>
 
+    <ScrollView
+        android:id="@+id/scrollableContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statistics">
 
-    <LinearLayout
-        android:id="@+id/detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/statistics"
-        tools:layout_editor_absoluteX="0dp">
-
-        <!-- Select Date Button -->
-        <Button
-            android:id="@+id/buttonStats"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Select Date"
-            android:layout_gravity="center"
-            android:background="@drawable/box5"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
-
-        <!-- TextViews for Expenses -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <!-- TextViews for Income -->
+            <LinearLayout
+                android:id="@+id/detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/statistics"
+                tools:layout_editor_absoluteX="0dp">
+
+                <!-- Select Date Button -->
+                <Button
+                    android:id="@+id/buttonStats"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/box5"
+                    android:text="Select Date"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- TextViews for Expenses -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <!-- TextViews for Income -->
+                    <TextView
+                        android:id="@+id/incomeView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Income:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- TextViews for Expenses -->
+                    <TextView
+                        android:id="@+id/expensesView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Expense:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/pieChart" >
             <TextView
-                android:id="@+id/incomeView"
-                android:layout_width="0dp"
+                android:id="@+id/top"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Income:"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:text="Top Category"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
 
-            <!-- TextViews for Expenses -->
-            <TextView
-                android:id="@+id/expensesView"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/topCategory"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Expense:"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/box"
+                android:elevation="6dp"
+                android:fillViewport="true"
+                android:orientation="vertical"
+                android:padding="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/top"></LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <LinearLayout
-        android:id="@+id/topCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:fillViewport="true"
-        android:layout_marginTop="6dp"
-        android:padding = "6dp"
-        android:background="@drawable/box"
-        android:elevation="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/pieChart"
-        android:orientation="vertical">
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <include
         android:id="@+id/bottomNavigation"
@@ -106,7 +135,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </android.support.constraint.ConstraintLayout>
