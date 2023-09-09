@@ -1,11 +1,10 @@
 package com.example.financebudgetingapp;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -78,7 +77,6 @@ public class Statistics extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Handle the Activities button click here
-                // For example: startActivity(new Intent(MainActivity.this, ActivitiesActivity.class));
                 startActivity(new Intent(Statistics.this, com.example.financebudgetingapp.Transaction.class));
             }
         });
@@ -87,7 +85,6 @@ public class Statistics extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Handle the Statistics button click here
-                // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
                 startActivity(new Intent(Statistics.this, com.example.financebudgetingapp.Statistics.class));
             }
         });
@@ -126,11 +123,10 @@ public class Statistics extends AppCompatActivity {
     }
 
     private void retrieveDataForMonthAndYear(int year, int month) {
-        // Assuming you have a method in your SQLiteAdapter class to retrieve data for a specific month and year
-        // You can use mySQLiteAdapter.methodToRetrieveDataForMonthAndYear(year, month) here
-        // This method should query your database and return the relevant data for the specified year and month
 
-        // Example:
+        // Use mySQLiteAdapter
+        // Query SQLite database and return the relevant data for the specified year and month
+
         float totalIncomes = mySQLiteAdapter.queryTotalIncomeForMonthAndYear(year, month);
         float totalExpenses = mySQLiteAdapter.queryTotalExpenseForMonthAndYear(year, month);
         mySQLiteAdapter.topCat(topCategory, year , month);
@@ -150,10 +146,10 @@ public class Statistics extends AppCompatActivity {
 
         PieData data = new PieData(dataSet);
 
-// Set data to the PieChart
+        // Set data to the PieChart
         pieChart.setData(data);
 
-// Customize the PieChart appearance
+        // Customize the PieChart appearance
         pieChart.getDescription().setEnabled(false);
         pieChart.setUsePercentValues(true);
         pieChart.setCenterText("Expense Categories");
