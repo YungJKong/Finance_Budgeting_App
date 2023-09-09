@@ -364,9 +364,8 @@ public class SQLiteAdapter extends AppCompatActivity {
 
     public void topCat(LinearLayout topCategory, int year, int month) {
         String[] columns = new String[] {
-                COLUMN_TYPE,
                 COLUMN_CATEGORY,
-                COLUMN_MONEY,
+                "SUM(" + COLUMN_MONEY + ") AS " + COLUMN_MONEY
         };
 
         String selection = COLUMN_TYPE + " = ? AND SUBSTR(" + COLUMN_DATE + ", 1, 7) = ?";
@@ -378,12 +377,11 @@ public class SQLiteAdapter extends AppCompatActivity {
                 columns,
                 selection,
                 selectionArgs,
-                null, // Order by money
+                COLUMN_CATEGORY, // Order by money
                 null,
                 COLUMN_MONEY + " DESC"
         );
 
-        int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
         int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
         int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
 
@@ -391,11 +389,10 @@ public class SQLiteAdapter extends AppCompatActivity {
         int count = 0; // Counter for the top 5 categories
         topCategory.removeAllViews();
         while (!cursor.isAfterLast() && count < 5) {
-            String type = cursor.getString(index_TYPE);
             String category = cursor.getString(index_CATEGORY);
             double money = cursor.getDouble(index_MONEY);
 
-            if ("Expenses".equals(type)) {
+
                 // Create a separator line
                 View separator = new View(context);
                 separator.setLayoutParams(new LinearLayout.LayoutParams(
@@ -448,7 +445,7 @@ public class SQLiteAdapter extends AppCompatActivity {
                 ll.addView(ll_left);
                 ll.addView(ll_right);
                 topCategory.addView(ll);
-            }
+
 
             cursor.moveToNext();
         }

@@ -209,6 +209,14 @@ public class AddTransaction extends AppCompatActivity {
                     Toast.makeText(AddTransaction.this, "Please choose a category", Toast.LENGTH_SHORT).show();
                 } else if(date.isEmpty()){
                     Toast.makeText(AddTransaction.this, "Please choose a date", Toast.LENGTH_SHORT).show();
+                }else if(note.isEmpty()) {
+                    note="";
+                    money = Float.parseFloat(sMoney);
+                    mySQLiteAdapter.openToWrite();
+                    mySQLiteAdapter.insert(type, money, wallet, category, note, date);
+                    mySQLiteAdapter.close();
+                    Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AddTransaction.this, Transaction.class));
                 }
                 else {
                     // SQL Adapter Open To Write
