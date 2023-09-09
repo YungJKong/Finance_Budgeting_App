@@ -362,18 +362,22 @@ public class SQLiteAdapter extends AppCompatActivity {
         cursor.close();
     }
 
-    public void topCat(LinearLayout topCategory) {
+    public void topCat(LinearLayout topCategory, int year, int month) {
         String[] columns = new String[] {
                 COLUMN_TYPE,
                 COLUMN_CATEGORY,
                 COLUMN_MONEY,
         };
 
+        String selection = COLUMN_TYPE + " = ? AND SUBSTR(" + COLUMN_DATE + ", 1, 7) = ?";
+        String[] selectionArgs = { "Expenses", String.format(Locale.US, "%04d-%02d", year, month) };
+
+
         Cursor cursor = sqLiteDatabase.query(
                 MYDATABASE_TABLE,
                 columns,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null, // Order by money
                 null,
                 COLUMN_MONEY + " DESC"
@@ -385,7 +389,7 @@ public class SQLiteAdapter extends AppCompatActivity {
 
         cursor.moveToFirst();
         int count = 0; // Counter for the top 5 categories
-
+        topCategory.removeAllViews();
         while (!cursor.isAfterLast() && count < 5) {
             String type = cursor.getString(index_TYPE);
             String category = cursor.getString(index_CATEGORY);

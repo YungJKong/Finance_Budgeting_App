@@ -47,8 +47,7 @@ public class Statistics extends AppCompatActivity {
 
         mySQLiteAdapter = new SQLiteAdapter(this);
         mySQLiteAdapter.openToRead();
-        
-        mySQLiteAdapter.topCat(topCategory);
+
         //mySQLiteAdapter.close();
 
         Calendar calendar = Calendar.getInstance();
@@ -134,6 +133,7 @@ public class Statistics extends AppCompatActivity {
         // Example:
         float totalIncomes = mySQLiteAdapter.queryTotalIncomeForMonthAndYear(year, month);
         float totalExpenses = mySQLiteAdapter.queryTotalExpenseForMonthAndYear(year, month);
+        mySQLiteAdapter.topCat(topCategory, year , month);
         createPie(year,month);
         income.setText(String.format("RM %.2f", totalIncomes));
         expenses.setText(String.format("RM %.2f", totalExpenses));
