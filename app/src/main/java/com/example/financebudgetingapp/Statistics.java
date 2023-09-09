@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Statistics extends AppCompatActivity {
@@ -46,9 +47,16 @@ public class Statistics extends AppCompatActivity {
 
         mySQLiteAdapter = new SQLiteAdapter(this);
         mySQLiteAdapter.openToRead();
-        
-        mySQLiteAdapter.topCat(topCategory);
-        mySQLiteAdapter.close();
+
+        //mySQLiteAdapter.close();
+
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        String currentDate = currentYear + "-" + String.format("%02d", currentMonth);
+        buttonStats.setText(currentDate);
+        retrieveDataForMonthAndYear(currentYear, currentMonth);
+
 
         buttonStats.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +78,6 @@ public class Statistics extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Handle the Activities button click here
-                // For example: startActivity(new Intent(MainActivity.this, ActivitiesActivity.class));
                 startActivity(new Intent(Statistics.this, com.example.financebudgetingapp.Transaction.class));
             }
         });
@@ -79,38 +86,10 @@ public class Statistics extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Handle the Statistics button click here
-                // For example: startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
                 startActivity(new Intent(Statistics.this, com.example.financebudgetingapp.Statistics.class));
             }
         });
 
-        // Find the PieChart view by its ID
-        /*PieChart pieChart = findViewById(R.id.pieChart);
-
-
-        List<PieEntry> pieEntries = mySQLiteAdapter.getExpenseSumByCategory();
-
-
-        PieDataSet dataSet = new PieDataSet(pieEntries, "Expense Categories");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setValueTextSize(12f);
-
-// Create PieData
-        PieData data = new PieData(dataSet);
-
-// Set data to the PieChart
-        pieChart.setData(data);
-
-// Customize the PieChart appearance
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setUsePercentValues(true);
-        pieChart.setCenterText("Expense Categories");
-        pieChart.setCenterTextSize(15f);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(android.R.color.transparent);
-
-// Refresh the chart
-        pieChart.invalidate();*/
 
 
     }
@@ -129,6 +108,8 @@ public class Statistics extends AppCompatActivity {
                 int selectedYear = datePicker.getYear();
                 int selectedMonth = datePicker.getMonth() + 1;
                 retrieveDataForMonthAndYear(selectedYear, selectedMonth);
+                String currentDate = selectedYear + "-" + String.format("%02d", selectedMonth);
+                buttonStats.setText(currentDate);
             }
         });
 
@@ -143,15 +124,42 @@ public class Statistics extends AppCompatActivity {
     }
 
     private void retrieveDataForMonthAndYear(int year, int month) {
-        // Assuming you have a method in your SQLiteAdapter class to retrieve data for a specific month and year
-        // You can use mySQLiteAdapter.methodToRetrieveDataForMonthAndYear(year, month) here
-        // This method should query your database and return the relevant data for the specified year and month
 
-        // Example:
+        // Use mySQLiteAdapter
+        // Query SQLite database and return the relevant data for the specified year and month
+
         float totalIncomes = mySQLiteAdapter.queryTotalIncomeForMonthAndYear(year, month);
         float totalExpenses = mySQLiteAdapter.queryTotalExpenseForMonthAndYear(year, month);
+        mySQLiteAdapter.topCat(topCategory, year , month);
+        createPie(year,month);
         income.setText(String.format("RM %.2f", totalIncomes));
         expenses.setText(String.format("RM %.2f", totalExpenses));
+
+    }
+
+    private void createPie(int year, int month) {
+        // Find the PieChart view by its ID
+        PieChart pieChart = findViewById(R.id.pieChart);
+        List<PieEntry> pieEntries = mySQLiteAdapter.getExpenseSumByCategory(year,month);
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Expense Categories");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setValueTextSize(12f);
+
+        PieData data = new PieData(dataSet);
+
+        // Set data to the PieChart
+        pieChart.setData(data);
+
+        // Customize the PieChart appearance
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.setCenterText("Expense Categories");
+        pieChart.setCenterTextSize(15f);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(android.R.color.transparent);
+
+
+        pieChart.invalidate();
 
     }
 
