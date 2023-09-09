@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Statistics extends AppCompatActivity {
@@ -49,6 +50,15 @@ public class Statistics extends AppCompatActivity {
         
         mySQLiteAdapter.topCat(topCategory);
         //mySQLiteAdapter.close();
+
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        String currentDate = currentYear + "-" + String.format("%02d", currentMonth);
+        buttonStats.setText(currentDate);
+
+        retrieveDataForMonthAndYear(currentYear, currentMonth);
+
 
         buttonStats.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +119,7 @@ public class Statistics extends AppCompatActivity {
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(android.R.color.transparent);
 
-// Refresh the chart
+
         pieChart.invalidate();
 
 

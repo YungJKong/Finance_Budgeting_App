@@ -40,13 +40,13 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/detail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/statistics"
-                tools:layout_editor_absoluteX="0dp">
+            android:id="@+id/detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/statistics"
+            tools:layout_editor_absoluteX="0dp">
 
                 <!-- Select Date Button -->
                 <Button
@@ -91,14 +91,13 @@
                 </LinearLayout>
             </LinearLayout>
 
+
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 app:layout_constraintTop_toBottomOf="@+id/detail"
                 />
-
-
             <LinearLayout
                 android:id="@+id/category"
                 android:layout_width="match_parent"
