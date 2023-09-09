@@ -27,13 +27,14 @@ public class Statistics extends AppCompatActivity {
     private Button buttonStats;
     private SQLiteAdapter mySQLiteAdapter;
     private TextView income, expenses;
+    private LinearLayout topCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-
+        topCategory = findViewById(R.id.topCategory);
         income = findViewById(R.id.incomeView);
         expenses = findViewById(R.id.expensesView);
         mySQLiteAdapter = new SQLiteAdapter(this);
@@ -42,6 +43,12 @@ public class Statistics extends AppCompatActivity {
         btnHome = findViewById(R.id.btnHome);
         btnAct = findViewById(R.id.btnAct);
         btnStat = findViewById(R.id.btnStat);
+
+        mySQLiteAdapter = new SQLiteAdapter(this);
+        mySQLiteAdapter.openToRead();
+        
+        mySQLiteAdapter.topCat(topCategory);
+        mySQLiteAdapter.close();
 
         buttonStats.setOnClickListener(new View.OnClickListener() {
             @Override
