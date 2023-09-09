@@ -14,6 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.List;
+
 public class Statistics extends AppCompatActivity {
     private LinearLayout btnHome, btnAct, btnStat;
     private Button buttonStats;
@@ -68,6 +76,41 @@ public class Statistics extends AppCompatActivity {
                 startActivity(new Intent(Statistics.this, com.example.financebudgetingapp.Statistics.class));
             }
         });
+
+        // Find the PieChart view by its ID
+        PieChart pieChart = findViewById(R.id.pieChart);
+
+
+        List<PieEntry> pieEntries = mySQLiteAdapter.getExpenseSumByCategory();
+
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Expense Categories");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setValueTextSize(12f);
+
+// Create PieData
+        PieData data = new PieData(dataSet);
+
+// Set data to the PieChart
+        pieChart.setData(data);
+
+// Customize the PieChart appearance
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.setCenterText("Expense Categories");
+        pieChart.setCenterTextSize(15f);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(android.R.color.transparent);
+
+// Refresh the chart
+        pieChart.invalidate();
+
+
+
+
+
+
+
     }
     private void createDatePickerDialog() {
         // Initialize the DatePicker dialog

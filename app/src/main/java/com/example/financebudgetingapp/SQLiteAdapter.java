@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -17,6 +18,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import com.example.financebudgetingapp.model.Budget;
 import com.example.financebudgetingapp.model.TransactionModel;
@@ -56,7 +63,7 @@ public class SQLiteAdapter extends AppCompatActivity {
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_BUDGET_CATEGORY + " TEXT, " +
             COLUMN_AMOUNT + " REAL, " +
-            COLUMN_LEFT + " REAL DEFAULT 0);";
+            COLUMN_LEFT + " REAL DEFAULT 0)";
 
     private SQLiteHelper sqLiteHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -629,6 +636,45 @@ public class SQLiteAdapter extends AppCompatActivity {
         // Close the database connection
         //close();
     }
+    public List<PieEntry> getExpenseSumByCategory() {
+        List<PieEntry> entries = new ArrayList<>();
+
+        String[] columns = new String[] {
+                COLUMN_CATEGORY,
+                "SUM(" + COLUMN_MONEY + ") AS " + COLUMN_MONEY
+        };
+
+        String selection = COLUMN_TYPE + " = ?";
+        String[] selectionArgs = { "Expenses" };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                COLUMN_CATEGORY,
+                null,
+                null
+        );
+
+        int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            String category = cursor.getString(index_CATEGORY);
+            float money = cursor.getFloat(index_MONEY);
+
+            entries.add(new PieEntry(money, category));
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return entries;
+    }
 
     public class SQLiteHelper extends SQLiteOpenHelper {
         public SQLiteHelper(Context context, String name,
@@ -638,7 +684,12 @@ public class SQLiteAdapter extends AppCompatActivity {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SCRIPT_CREATE_DATABASE);
-            db.execSQL(SCRIPT_CREATE_BUDGET_TABLE);
+            try {
+                // Execute the SQL statement to create the table
+                db.execSQL(SCRIPT_CREATE_BUDGET_TABLE);
+            } catch (SQLException e) {
+                // Handle the exception (e.g., log the error or perform recovery actions)
+            }
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
