@@ -1,5 +1,6 @@
 package com.example.financebudgetingapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -19,8 +20,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddTransaction extends AppCompatActivity {
     private Button addButton;
@@ -38,6 +41,7 @@ public class AddTransaction extends AppCompatActivity {
     private String note="";
     private String date="";
     private EditText amountEditText;
+    private String bt_category="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +160,21 @@ public class AddTransaction extends AppCompatActivity {
         categoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupMenu(v);
+                if(type=="Incomes"){
+                    Intent intent = new Intent(AddTransaction.this, IncomesButton.class);
+                    startActivityForResult(intent, 1);
+                }
+                else if(type=="Expenses"){
+                    Intent intent = new Intent(AddTransaction.this, ExpensesButton.class);
+                    startActivityForResult(intent, 2);
+                }
+                else if(type=="Savings"){
+                    Intent intent = new Intent(AddTransaction.this, ExpensesButton.class);
+                    startActivityForResult(intent, 2);
+                }
+                else{
+
+                }
 
             }
         });
@@ -178,17 +196,31 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
+
             }
         });
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sMoney = amountEditText.getText().toString();
-                money = Float.parseFloat(sMoney);
-                //SQL Adapter Open To Write
-                mySQLiteAdapter.openToWrite();
-                mySQLiteAdapter.insert(type,money,wallet,category,note,date);
-                mySQLiteAdapter.close();
+                if (sMoney.isEmpty()) {
+                    Toast.makeText(AddTransaction.this, "Please enter an amount", Toast.LENGTH_SHORT).show();
+                } else if (category.isEmpty()) {
+                    Toast.makeText(AddTransaction.this, "Please choose a category", Toast.LENGTH_SHORT).show();
+                } else if(date.isEmpty()){
+                    Toast.makeText(AddTransaction.this, "Please choose a date", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // SQL Adapter Open To Write
+                    money = Float.parseFloat(sMoney);
+                    mySQLiteAdapter.openToWrite();
+                    mySQLiteAdapter.insert(type, money, wallet, category, note, date);
+                    mySQLiteAdapter.close();
+                    Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AddTransaction.this, Transaction.class));
+                }
+
+
 
             }
         });
@@ -210,12 +242,18 @@ public class AddTransaction extends AppCompatActivity {
 
         if(activeButton == btnIncomes){
             type = "Incomes";
+            categoryButton.setText("Category");
+            category="";
         }
         else if (activeButton == btnExpenses){
             type = "Expenses";
+            categoryButton.setText("Category");
+            category="";
         }
         else if (activeButton == btnSavings){
             type = "Savings";
+            categoryButton.setText("Category");
+            category="";
         }
         else{
             type = "";
@@ -230,6 +268,7 @@ public class AddTransaction extends AppCompatActivity {
 
         if(activeButton == btnBank){
             wallet = "Bank";
+
         }
         else if (activeButton == btnCredit){
             wallet = "Credit Card";
@@ -242,22 +281,6 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
-    private void showPopupMenu(View anchorView) {
-        PopupMenu popupMenu = new PopupMenu(this, anchorView);
-        popupMenu.getMenuInflater().inflate(R.menu.category_transaction, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                String selectedCategory = item.getTitle().toString();
-                category = selectedCategory;
-                categoryButton.setText(selectedCategory);
-                return true;
-            }
-        });
-
-        popupMenu.show();
-    }
     private void showInputDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -272,7 +295,7 @@ public class AddTransaction extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         enteredText = inputEditText.getText().toString();
                         note = enteredText;
-                        noteButton.setText("Note: " + enteredText);
+                        noteButton.setText(enteredText);
                     }
                 })
                 .setNegativeButton("Cancel", null);
@@ -297,5 +320,24 @@ public class AddTransaction extends AppCompatActivity {
         );
 
         datePickerDialog.show();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            if (data != null && data.hasExtra("incomesText")) {
+                String incomesText = data.getStringExtra("incomesText");
+                category = incomesText;
+                categoryButton.setText(incomesText);
+            }
+        }
+        else if((requestCode == 2 && resultCode == Activity.RESULT_OK)) {
+            if (data != null && data.hasExtra("expensesText")) {
+                String expensesText = data.getStringExtra("expensesText");
+                category = expensesText;
+                categoryButton.setText(expensesText);
+            }
+        }
     }
 }

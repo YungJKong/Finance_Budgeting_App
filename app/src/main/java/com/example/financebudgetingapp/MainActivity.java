@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -34,7 +35,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView usernameTextView, incomeTV, expenseTV, allTV;
+    private TextView usernameTextView, incomeTV, expenseTV, allTV, Home;
     private TextView moneyTextView;
     private LinearLayout activityContainer;
     private LinearLayout btnHome, btnAct, btnStat;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         activityContainer = findViewById(R.id.activityContainer);
         allTV = findViewById(R.id.allTV);
         userIcon = findViewById(R.id.userIcon);
+        Home = findViewById(R.id.Home);
 
         // Initialize your SQLiteAdapter
         mySQLiteAdapter = new SQLiteAdapter(this);
