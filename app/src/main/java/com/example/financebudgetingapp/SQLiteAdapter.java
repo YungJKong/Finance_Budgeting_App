@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -17,6 +18,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import com.example.financebudgetingapp.model.Budget;
 import com.example.financebudgetingapp.model.TransactionModel;
@@ -56,7 +63,7 @@ public class SQLiteAdapter extends AppCompatActivity {
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_BUDGET_CATEGORY + " TEXT, " +
             COLUMN_AMOUNT + " REAL, " +
-            COLUMN_LEFT + " REAL DEFAULT 0);";
+            COLUMN_LEFT + " REAL DEFAULT 0)";
 
     private SQLiteHelper sqLiteHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -355,6 +362,102 @@ public class SQLiteAdapter extends AppCompatActivity {
         cursor.close();
     }
 
+    public void topCat(LinearLayout topCategory) {
+        String[] columns = new String[] {
+                COLUMN_TYPE,
+                COLUMN_CATEGORY,
+                COLUMN_MONEY,
+        };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                null,
+                null,
+                null, // Order by money
+                null,
+                COLUMN_MONEY + " DESC"
+        );
+
+        int index_TYPE = cursor.getColumnIndex(COLUMN_TYPE);
+        int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
+
+        cursor.moveToFirst();
+        int count = 0; // Counter for the top 5 categories
+
+        while (!cursor.isAfterLast() && count < 5) {
+            String type = cursor.getString(index_TYPE);
+            String category = cursor.getString(index_CATEGORY);
+            double money = cursor.getDouble(index_MONEY);
+
+
+            // Create a separator line
+            View separator = new View(context);
+            separator.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1)); // Adjust the height as needed
+            separator.setBackgroundColor(Color.GRAY); // Set the separator color
+
+            // Add the separator to the dataLayout
+            topCategory.addView(separator);
+
+            LinearLayout ll = new LinearLayout(context);
+            ll.setOrientation(LinearLayout.HORIZONTAL);
+
+            LinearLayout ll_left = new LinearLayout(context);
+            ll_left.setOrientation(LinearLayout.VERTICAL);
+            ll_left.setLayoutParams(new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+
+            LinearLayout ll_right = new LinearLayout(context);
+            ll_right.setOrientation(LinearLayout.VERTICAL);
+            ll_right.setLayoutParams(new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+
+            TextView tv_category = new TextView(context);
+            TextView tv_money = new TextView(context);
+            tv_money.setTypeface(null, Typeface.BOLD);
+            tv_category.setTextSize(18);
+            tv_money.setTextSize(18);
+            tv_category.setText(category);
+
+            // Determine the text color based on the type
+            if ("Incomes".equals(type)) {
+                tv_money.setTextColor(Color.parseColor("#28B463"));
+                tv_money.setText(String.format("%.2f", money));
+            } else if ("Expenses".equals(type) || "Savings".equals(type)) {
+                tv_money.setTextColor(Color.RED);
+                tv_money.setText("-" + String.format("%.2f", money));
+            }
+
+            tv_money.setGravity(Gravity.END);
+
+
+            // Create layout parameters for TextViews with margins
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, // Width
+                    LinearLayout.LayoutParams.WRAP_CONTENT  // Height
+            );
+            layoutParams.setMargins(0, 16, 0, 8); // Left, Top, Right, Bottom margins (adjust values as needed)
+
+            // Apply layout parameters to TextViews
+            tv_category.setLayoutParams(layoutParams);
+            tv_money.setLayoutParams(layoutParams);
+
+            ll_left.addView(tv_category);
+            ll_right.addView(tv_money);
+
+            ll.addView(ll_left);
+            ll.addView(ll_right);
+            topCategory.addView(ll);
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+    }
+
+
     public double incomeAll() {
         String[] columns = new String[] {
                 COLUMN_MONEY,
@@ -629,6 +732,45 @@ public class SQLiteAdapter extends AppCompatActivity {
         // Close the database connection
         //close();
     }
+    public List<PieEntry> getExpenseSumByCategory() {
+        List<PieEntry> entries = new ArrayList<>();
+
+        String[] columns = new String[] {
+                COLUMN_CATEGORY,
+                "SUM(" + COLUMN_MONEY + ") AS " + COLUMN_MONEY
+        };
+
+        String selection = COLUMN_TYPE + " = ?";
+        String[] selectionArgs = { "Expenses" };
+
+        Cursor cursor = sqLiteDatabase.query(
+                MYDATABASE_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                COLUMN_CATEGORY,
+                null,
+                null
+        );
+
+        int index_CATEGORY = cursor.getColumnIndex(COLUMN_CATEGORY);
+        int index_MONEY = cursor.getColumnIndex(COLUMN_MONEY);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            String category = cursor.getString(index_CATEGORY);
+            float money = cursor.getFloat(index_MONEY);
+
+            entries.add(new PieEntry(money, category));
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return entries;
+    }
 
     public class SQLiteHelper extends SQLiteOpenHelper {
         public SQLiteHelper(Context context, String name,
@@ -638,7 +780,12 @@ public class SQLiteAdapter extends AppCompatActivity {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SCRIPT_CREATE_DATABASE);
-            db.execSQL(SCRIPT_CREATE_BUDGET_TABLE);
+            try {
+                // Execute the SQL statement to create the table
+                db.execSQL(SCRIPT_CREATE_BUDGET_TABLE);
+            } catch (SQLException e) {
+                // Handle the exception (e.g., log the error or perform recovery actions)
+            }
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
