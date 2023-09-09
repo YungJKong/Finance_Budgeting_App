@@ -43,7 +43,7 @@
                 android:id="@+id/detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/statistics"
                 tools:layout_editor_absoluteX="0dp">
@@ -55,38 +55,94 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/box5"
                     android:text="Select Date"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <!-- TextViews for Expenses -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="5dp">
 
                     <!-- TextViews for Income -->
-                    <TextView
-                        android:id="@+id/incomeView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Income:"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/in"
+                        android:layout_width="160dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/box8"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/down"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="down"
+                            android:src="@drawable/down" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_toRightOf="@+id/down"
+                            android:text="Income"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/incomeView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Income:"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@+id/down" />
+                    </LinearLayout>
 
                     <!-- TextViews for Expenses -->
-                    <TextView
-                        android:id="@+id/expensesView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Expense:"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/ex"
+                        android:layout_width="160dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/box9"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/up"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="up"
+                            android:src="@drawable/up" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_toRightOf="@+id/up"
+                            android:text="Expense"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/expensesView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Expense:"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@+id/up" />
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -95,35 +151,38 @@
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/pieChart" >
-            <TextView
-                android:id="@+id/top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Top Category"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                />
+                android:layout_height="300dp"
+                app:layout_constraintTop_toBottomOf="@+id/detail" />
 
             <LinearLayout
-                android:id="@+id/topCategory"
+                android:id="@+id/category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/box"
-                android:elevation="6dp"
-                android:fillViewport="true"
                 android:orientation="vertical"
-                android:padding="6dp"
-                app:layout_constraintTop_toBottomOf="@+id/top"></LinearLayout>
-        </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/pieChart">
+
+                <TextView
+                    android:id="@+id/top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Top Category"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/topCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/box"
+                    android:elevation="6dp"
+                    android:fillViewport="true"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    app:layout_constraintTop_toBottomOf="@+id/top"></LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
