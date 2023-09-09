@@ -56,7 +56,6 @@ public class Statistics extends AppCompatActivity {
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
         String currentDate = currentYear + "-" + String.format("%02d", currentMonth);
         buttonStats.setText(currentDate);
-
         retrieveDataForMonthAndYear(currentYear, currentMonth);
 
 
@@ -94,33 +93,6 @@ public class Statistics extends AppCompatActivity {
             }
         });
 
-        // Find the PieChart view by its ID
-        PieChart pieChart = findViewById(R.id.pieChart);
-
-
-        List<PieEntry> pieEntries = mySQLiteAdapter.getExpenseSumByCategory();
-
-
-        PieDataSet dataSet = new PieDataSet(pieEntries, "Expense Categories");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setValueTextSize(12f);
-
-// Create PieData
-        PieData data = new PieData(dataSet);
-
-// Set data to the PieChart
-        pieChart.setData(data);
-
-// Customize the PieChart appearance
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setUsePercentValues(true);
-        pieChart.setCenterText("Expense Categories");
-        pieChart.setCenterTextSize(15f);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(android.R.color.transparent);
-
-
-        pieChart.invalidate();
 
 
     }
@@ -139,6 +111,8 @@ public class Statistics extends AppCompatActivity {
                 int selectedYear = datePicker.getYear();
                 int selectedMonth = datePicker.getMonth() + 1;
                 retrieveDataForMonthAndYear(selectedYear, selectedMonth);
+                String currentDate = selectedYear + "-" + String.format("%02d", selectedMonth);
+                buttonStats.setText(currentDate);
             }
         });
 
@@ -160,8 +134,35 @@ public class Statistics extends AppCompatActivity {
         // Example:
         float totalIncomes = mySQLiteAdapter.queryTotalIncomeForMonthAndYear(year, month);
         float totalExpenses = mySQLiteAdapter.queryTotalExpenseForMonthAndYear(year, month);
+        createPie(year,month);
         income.setText(String.format("RM %.2f", totalIncomes));
         expenses.setText(String.format("RM %.2f", totalExpenses));
+
+    }
+
+    private void createPie(int year, int month) {
+        // Find the PieChart view by its ID
+        PieChart pieChart = findViewById(R.id.pieChart);
+        List<PieEntry> pieEntries = mySQLiteAdapter.getExpenseSumByCategory(year,month);
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Expense Categories");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setValueTextSize(12f);
+
+        PieData data = new PieData(dataSet);
+
+// Set data to the PieChart
+        pieChart.setData(data);
+
+// Customize the PieChart appearance
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.setCenterText("Expense Categories");
+        pieChart.setCenterTextSize(15f);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(android.R.color.transparent);
+
+
+        pieChart.invalidate();
 
     }
 

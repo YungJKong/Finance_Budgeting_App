@@ -727,7 +727,7 @@ public class SQLiteAdapter extends AppCompatActivity {
         // Close the database connection
         //close();
     }
-    public List<PieEntry> getExpenseSumByCategory() {
+    public List<PieEntry> getExpenseSumByCategory(int year, int month) {
         List<PieEntry> entries = new ArrayList<>();
 
         String[] columns = new String[] {
@@ -735,8 +735,8 @@ public class SQLiteAdapter extends AppCompatActivity {
                 "SUM(" + COLUMN_MONEY + ") AS " + COLUMN_MONEY
         };
 
-        String selection = COLUMN_TYPE + " = ?";
-        String[] selectionArgs = { "Expenses" };
+        String selection = COLUMN_TYPE + " = ? AND SUBSTR(" + COLUMN_DATE + ", 1, 7) = ?";
+        String[] selectionArgs = { "Expenses", String.format(Locale.US, "%04d-%02d", year, month) };
 
         Cursor cursor = sqLiteDatabase.query(
                 MYDATABASE_TABLE,
