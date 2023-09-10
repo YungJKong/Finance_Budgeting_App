@@ -250,11 +250,13 @@ public class MainActivity extends AppCompatActivity {
                 if (!username.isEmpty()) {
                     usernameTextView.setText("Hi, " + username);
                     // Save the entered username to SharedPreferences if needed
-                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs",
+                            MODE_PRIVATE);
                     sharedPreferences.edit().putString("username", username).apply();
                 } else {
                     // Show an error message if the username is empty
-                    Toast.makeText(MainActivity.this, "Please enter a username", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please enter a username",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
